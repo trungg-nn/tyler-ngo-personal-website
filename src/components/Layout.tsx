@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Menu, X } from "lucide-react";
 import SiteFooter from "@/components/SiteFooter";
 
 export type Lang = "en" | "vi";
@@ -28,6 +28,7 @@ const links = [
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const [isDark, setIsDark] = useState(true);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const lang: Lang = "en";
 
   useEffect(() => {
@@ -44,6 +45,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     document.documentElement.classList.toggle("dark", next);
     localStorage.setItem("theme", next ? "dark" : "light");
   };
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [location.pathname]);
 
   return (
     <LanguageContext.Provider value={{ lang, setLanguage: () => {} }}>
@@ -67,7 +72,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 ))}
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 md:gap-3">
                 <button
                   type="button"
                   onClick={toggleTheme}
@@ -77,11 +82,40 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 >
                   {isDark ? <Sun size={16} /> : <Moon size={16} />}
                 </button>
-                <Link to="/contact" className="cta-btn rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5">
+
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen((v) => !v)}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-background/55 text-muted-foreground transition-all duration-300 hover:text-foreground md:hidden"
+                  aria-label="Toggle navigation menu"
+                >
+                  {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+                </button>
+
+                <Link to="/contact" className="cta-btn hidden rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 md:inline-flex">
                   Get in Touch
                 </Link>
               </div>
             </nav>
+
+            {mobileOpen && (
+              <div className="mt-2 rounded-2xl border border-border/70 bg-card/85 p-3 shadow-[0_10px_24px_rgba(0,0,0,0.16)] backdrop-blur-xl md:hidden">
+                <div className="grid gap-2">
+                  {links.map((l) => (
+                    <Link
+                      key={l.to}
+                      to={l.to}
+                      className={`rounded-lg px-3 py-2 text-sm transition-colors ${location.pathname === l.to ? "bg-secondary text-foreground" : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"}`}
+                    >
+                      {l.label}
+                    </Link>
+                  ))}
+                  <Link to="/contact" className="cta-btn mt-1 inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-medium">
+                    Get in Touch
+                  </Link>
+                </div>
+              </div>
+            )}
           </div>
         </header>
         <main key={location.pathname} className="page-enter">{children}</main>

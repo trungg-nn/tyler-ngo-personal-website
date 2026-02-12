@@ -35,8 +35,8 @@ const capabilities = {
 };
 
 const heroSlides = [
-  "/images/tyler-portrait-hero.jpg",
-  "/images/tyler-work-hero.jpg",
+  "/images/tyler-portrait-hero-v2.jpg",
+  "/images/tyler-work-hero-v2.jpg",
 ];
 
 const featuredArticles = {

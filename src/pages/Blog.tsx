@@ -54,17 +54,17 @@ const posts = [
 export default function Blog() {
   return (
     <Layout>
-      <section className="border-b border-border/50 bg-background py-16 md:py-22">
-        <div className="mx-auto w-full max-w-6xl px-6 md:px-8">
-          <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Blog</p>
-          <h1 className="text-4xl font-semibold leading-tight transition-colors duration-300 hover:text-primary md:text-[46px]">Insights & ideas</h1>
-          <p className="mt-5 text-base text-muted-foreground">
+      <section className="border-b border-border/50 bg-background py-16 md:py-20">
+        <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Blog</p>
+          <h1 className="text-5xl font-bold leading-tight transition-colors duration-300 hover:text-primary md:text-[52px]">Insights & ideas</h1>
+          <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-[17px]">
             Thinking on performance marketing, growth strategy, and the future of digital.
           </p>
 
-          <div className="mt-14 space-y-1">
+          <div className="mt-12 space-y-0">
             {posts.map((post) => (
-              <article key={post.title} className="border-b border-border/70 py-8 md:py-9">
+              <article key={post.title} className="border-b border-border/70 py-8">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <div className="inline-flex items-center gap-3">
                     <span className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">

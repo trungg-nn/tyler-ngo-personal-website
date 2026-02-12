@@ -1,75 +1,47 @@
-import Layout from "@/components/Layout";
+import Layout, { useLanguage } from "@/components/Layout";
 
-const posts = [
-  {
-    tag: "Attribution",
-    read: "8 min read",
-    title: "Why Multi-Touch Attribution Changes Everything",
-    excerpt:
-      "The days of last-click are over. Here’s how modern attribution models are reshaping budget allocation and proving true marketing impact.",
-    date: "Jan 15, 2026",
-  },
-  {
-    tag: "Performance",
-    read: "6 min read",
-    title: "Scaling Paid Media Without Scaling Waste",
-    excerpt:
-      "How to maintain efficiency as you increase spend—lessons from managing £5M+ monthly budgets across channels.",
-    date: "Dec 8, 2025",
-  },
-  {
-    tag: "Strategy",
-    read: "10 min read",
-    title: "The Experimentation Playbook for B2B",
-    excerpt:
-      "A practical framework for running meaningful experiments in B2B marketing, from hypothesis to statistical significance.",
-    date: "Nov 22, 2025",
-  },
-  {
-    tag: "Analytics",
-    read: "7 min read",
-    title: "Building a Growth Engine with Incrementality Testing",
-    excerpt:
-      "Move beyond correlation to causation. How incrementality testing reveals which campaigns truly drive revenue.",
-    date: "Oct 30, 2025",
-  },
-  {
-    tag: "Creative",
-    read: "5 min read",
-    title: "The Creative Testing Framework That Cut Our CPA by 22%",
-    excerpt:
-      "A structured approach to creative iteration that compounds performance gains over time.",
-    date: "Oct 5, 2025",
-  },
-  {
-    tag: "Strategy",
-    read: "9 min read",
-    title: "Full-Funnel Thinking in a Last-Click World",
-    excerpt:
-      "Why optimising for bottom-funnel metrics alone leaves growth on the table, and what to do about it.",
-    date: "Sep 18, 2025",
-  },
-];
+const posts = {
+  en: [
+    { tag: "Attribution", read: "8 min read", title: "Why Multi-Touch Attribution Changes Everything", excerpt: "The days of last-click are over. Here’s how modern attribution models are reshaping budget allocation and proving true marketing impact.", date: "Jan 15, 2026" },
+    { tag: "Performance", read: "6 min read", title: "Scaling Paid Media Without Scaling Waste", excerpt: "How to maintain efficiency as you increase spend—lessons from managing £5M+ monthly budgets across channels.", date: "Dec 8, 2025" },
+    { tag: "Strategy", read: "10 min read", title: "The Experimentation Playbook for B2B", excerpt: "A practical framework for running meaningful experiments in B2B marketing, from hypothesis to statistical significance.", date: "Nov 22, 2025" },
+  ],
+  vi: [
+    { tag: "Attribution", read: "8 phút đọc", title: "Vì sao Multi-Touch Attribution thay đổi cuộc chơi", excerpt: "Thời của last-click đã qua. Đây là cách attribution hiện đại định hình lại phân bổ ngân sách và chứng minh tác động thật của marketing.", date: "15 Thg 1, 2026" },
+    { tag: "Performance", read: "6 phút đọc", title: "Mở rộng Paid Media mà không lãng phí", excerpt: "Cách giữ hiệu quả khi tăng ngân sách — bài học từ việc quản lý hơn £5M mỗi tháng trên đa kênh.", date: "8 Thg 12, 2025" },
+    { tag: "Chiến lược", read: "10 phút đọc", title: "Playbook thử nghiệm cho B2B", excerpt: "Framework thực tiễn để chạy thử nghiệm có ý nghĩa trong B2B, từ giả thuyết đến ý nghĩa thống kê.", date: "22 Thg 11, 2025" },
+  ],
+};
 
 export default function Blog() {
+  const { lang } = useLanguage();
+  const t = {
+    en: {
+      label: "Blog",
+      title: "Insights & ideas",
+      subtitle: "Thinking on performance marketing, growth strategy, and the future of digital.",
+    },
+    vi: {
+      label: "Bài viết",
+      title: "Góc nhìn & ý tưởng",
+      subtitle: "Phân tích về performance marketing, chiến lược tăng trưởng và tương lai của digital.",
+    },
+  }[lang];
+
   return (
     <Layout>
       <section className="border-b border-border/50 bg-background py-16 md:py-20">
         <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Blog</p>
-          <h1 className="text-5xl font-bold leading-tight transition-colors duration-300 hover:text-primary md:text-[52px]">Insights & ideas</h1>
-          <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-[17px]">
-            Thinking on performance marketing, growth strategy, and the future of digital.
-          </p>
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">{t.label}</p>
+          <h1 className="text-5xl font-bold leading-tight transition-colors duration-300 hover:text-primary md:text-[52px]">{t.title}</h1>
+          <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-[17px]">{t.subtitle}</p>
 
           <div className="mt-12 space-y-0">
-            {posts.map((post) => (
+            {posts[lang].map((post) => (
               <article key={post.title} className="border-b border-border/70 py-8">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <div className="inline-flex items-center gap-3">
-                    <span className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">
-                      {post.tag}
-                    </span>
+                    <span className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">{post.tag}</span>
                     <span className="text-xs text-muted-foreground">{post.read}</span>
                   </div>
                   <span className="text-xs text-muted-foreground">{post.date}</span>

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp, Target, BarChart3, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
 import Layout, { useLanguage } from "@/components/Layout";
 import MetricCard from "@/components/MetricCard";
 
@@ -33,6 +34,12 @@ const capabilities = {
   ],
 };
 
+const heroSlides = [
+  "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+  "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
+];
+
 const featuredArticles = {
   en: [
     { title: "Why Multi-Touch Attribution Changes Everything", tag: "Attribution", date: "Jan 2026" },
@@ -48,6 +55,14 @@ const featuredArticles = {
 
 export default function Index() {
   const { lang } = useLanguage();
+  const [slideIndex, setSlideIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideIndex((prev) => (prev + 1) % heroSlides.length);
+    }, 3200);
+    return () => clearInterval(timer);
+  }, []);
 
   const t = {
     en: {
@@ -93,7 +108,7 @@ export default function Index() {
   return (
     <Layout>
       <section className="hero-bg relative overflow-hidden border-b border-border/60">
-        <div className="mx-auto w-full max-w-7xl px-6 pb-20 pt-24 md:pt-32 reveal-up">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-6 pb-20 pt-24 md:grid-cols-[1.05fr_0.95fr] md:pt-32 reveal-up">
           <div className="max-w-3xl">
             <p className="mb-6 inline-flex items-center rounded-full border border-primary/30 bg-card/30 px-4 py-1.5 text-sm text-primary">{t.badge}</p>
             <h1 className="text-4xl font-bold leading-[1.08] md:text-[72px]">{t.titleBefore} <span className="text-gradient-gold">{t.titleHighlight}</span></h1>
@@ -102,6 +117,18 @@ export default function Index() {
               <Link to="/portfolio" className="cta-btn inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-base font-medium">{t.viewWork} <ArrowRight size={16} /></Link>
               <Link to="/contact" className="rounded-xl border border-border bg-background/30 px-7 py-3.5 text-base">{t.getInTouch}</Link>
             </div>
+          </div>
+
+          <div className="relative hidden md:block">
+            <div className="hero-frame overflow-hidden rounded-[26px] border border-border/70 bg-card/50 p-2 shadow-[0_20px_60px_rgba(0,0,0,0.22)]">
+              <img
+                src={heroSlides[slideIndex]}
+                alt="Performance marketing"
+                className="h-[520px] w-full rounded-[20px] object-cover transition-all duration-700"
+              />
+            </div>
+            <div className="absolute -bottom-4 left-4 rounded-xl border border-border/70 bg-background/85 px-3 py-2 text-xs backdrop-blur">Live campaigns</div>
+            <div className="absolute -right-3 top-5 rounded-xl border border-border/70 bg-background/85 px-3 py-2 text-xs backdrop-blur">Attribution · Growth</div>
           </div>
         </div>
       </section>

@@ -30,7 +30,7 @@ export default function Index() {
         <div className="mx-auto w-full max-w-7xl px-6 pb-20 pt-24 md:pt-32 reveal-up">
           <div className="max-w-3xl">
             <p className="mb-6 inline-flex items-center rounded-full border border-primary/30 bg-card/30 px-4 py-1.5 text-sm text-primary">• Performance Marketing Manager · London</p>
-            <h1 className="text-4xl font-bold leading-[1.08] md:text-[72px]">Driving growth through <span className="text-gradient-gold">data, media & experimentation</span></h1>
+            <h1 className="text-4xl font-bold leading-[1.08] md:text-[72px]">Driving growth through <span className="hero-highlight text-gradient-gold">data, media & experimentation</span></h1>
             <p className="mt-7 max-w-2xl text-base text-muted-foreground md:text-[19px] md:leading-[1.65]">I help ambitious brands scale revenue with full-funnel performance strategies, rigorous attribution, and relentless optimisation.</p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Link to="/portfolio" className="cta-btn inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-base font-medium">View My Work <ArrowRight size={16} /></Link>

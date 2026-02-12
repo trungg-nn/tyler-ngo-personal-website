@@ -27,7 +27,7 @@ export default function Index() {
   return (
     <Layout>
       <section className="hero-bg relative overflow-hidden border-b border-border/60">
-        <div className="mx-auto w-full max-w-6xl px-6 pb-20 pt-24 md:pt-32">
+        <div className="mx-auto w-full max-w-6xl px-6 pb-20 pt-24 md:pt-32 reveal-up">
           <div className="max-w-3xl">
             <p className="mb-6 inline-flex items-center rounded-full border border-primary/30 bg-card/30 px-4 py-1.5 text-sm text-primary">• Performance Marketing Manager · London</p>
             <h1 className="text-4xl font-bold leading-[1.08] md:text-[72px]">Driving growth through <span className="text-gradient-gold">data, media & experimentation</span></h1>
@@ -40,7 +40,7 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="border-b border-border/50 bg-background py-24 md:py-28">
+      <section className="border-b border-border/50 bg-background py-24 md:py-28 reveal-up" style={{ animationDelay: '120ms' }}>
         <div className="mx-auto w-full max-w-6xl px-6">
           <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary">Results</p>
           <h2 className="mb-12 text-5xl font-semibold md:text-[52px]">Numbers that speak</h2>
@@ -48,16 +48,16 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="border-b border-border/50 bg-card/30 py-20 md:py-24">
+      <section className="border-b border-border/50 bg-card/30 py-16 md:py-20">
         <div className="mx-auto w-full max-w-6xl px-6">
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Expertise</p>
-          <h2 className="mb-10 text-[52px] font-semibold leading-tight">What I do best</h2>
+          <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Expertise</p>
+          <h2 className="mb-8 text-[44px] font-semibold leading-tight">What I do best</h2>
           <div className="grid gap-5 md:grid-cols-2">
-            {capabilities.map((c) => (
-              <article key={c.title} className="rounded-2xl border border-border bg-background/72 px-6 py-6 md:min-h-[174px]">
-                <div className="mb-5 inline-flex rounded-xl border border-border bg-card/50 p-3"><c.icon size={18} className="text-primary" /></div>
-                <h3 className="mb-2 text-2xl font-semibold leading-tight md:text-[34px]">{c.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground md:text-[17px]">{c.desc}</p>
+            {capabilities.map((c, i) => (
+              <article key={c.title} className={`reveal-up rounded-2xl border border-border bg-background/72 px-6 py-6 md:min-h-[154px]`} style={{ animationDelay: `${120 + i * 90}ms` }}>
+                <div className="mb-4 inline-flex rounded-xl border border-border bg-card/50 p-3"><c.icon size={16} className="text-primary" /></div>
+                <h3 className="mb-2 text-[28px] font-semibold leading-tight md:text-[30px]">{c.title}</h3>
+                <p className="text-[14px] leading-relaxed text-muted-foreground">{c.desc}</p>
               </article>
             ))}
           </div>

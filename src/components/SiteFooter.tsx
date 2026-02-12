@@ -3,17 +3,17 @@ import { Mail, MapPin } from "lucide-react";
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-border/60 bg-card/25 py-16">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 md:grid-cols-3">
+    <footer className="border-t border-border/60 bg-card/25 py-12">
+      <div className="mx-auto grid w-full max-w-6xl gap-8 px-6 md:grid-cols-3">
         <div>
-          <h3 className="text-3xl font-semibold">Tyler.Ngo</h3>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <h3 className="text-2xl font-semibold">Tyler.Ngo</h3>
+          <p className="mt-4 text-base text-muted-foreground">
             Performance Marketing Manager driving full-funnel growth through data, media, and experimentation.
           </p>
         </div>
         <div>
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">Navigate</p>
-          <div className="space-y-2 text-lg">
+          <div className="space-y-2 text-base">
             <Link to="/portfolio" className="block text-muted-foreground hover:text-foreground">Portfolio</Link>
             <Link to="/blog" className="block text-muted-foreground hover:text-foreground">Blog</Link>
             <Link to="/about" className="block text-muted-foreground hover:text-foreground">About</Link>
@@ -22,7 +22,7 @@ export default function SiteFooter() {
         </div>
         <div>
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">Contact</p>
-          <div className="space-y-3 text-lg text-muted-foreground">
+          <div className="space-y-3 text-base text-muted-foreground">
             <p className="inline-flex items-center gap-2"><Mail size={16} /> trungngo.2810@gmail.com</p>
             <p className="inline-flex items-center gap-2"><MapPin size={16} /> London, UK</p>
           </div>

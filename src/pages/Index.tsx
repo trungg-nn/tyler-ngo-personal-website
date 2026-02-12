@@ -64,17 +64,17 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="border-b border-border/50 bg-background py-20">
+      <section className="border-b border-border/50 bg-background py-16">
         <div className="mx-auto w-full max-w-6xl px-6">
           <div className="mb-10 flex items-end justify-between">
-            <div><p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Insights</p><h2 className="text-5xl font-semibold">Latest thinking</h2></div>
+            <div><p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Insights</p><h2 className="text-[44px] font-semibold">Latest thinking</h2></div>
             <Link to="/blog" className="hidden items-center gap-2 text-primary md:inline-flex">All articles <ArrowRight size={14} /></Link>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {featuredArticles.map((a) => (
-              <article key={a.title} className="rounded-2xl border border-border bg-card/60 p-6">
+              <article key={a.title} className="rounded-2xl border border-border bg-card/60 p-5">
                 <span className="mb-4 inline-block rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">{a.tag}</span>
-                <h3 className="mb-3 text-2xl font-semibold leading-tight">{a.title}</h3>
+                <h3 className="mb-3 text-xl font-semibold leading-tight">{a.title}</h3>
                 <p className="text-sm text-muted-foreground">{a.date}</p>
               </article>
             ))}
@@ -82,13 +82,13 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="border-b border-border/50 bg-card/30 py-20">
+      <section className="border-b border-border/50 bg-card/30 py-16">
         <div className="mx-auto w-full max-w-3xl px-6 text-center">
-          <h2 className="text-5xl font-semibold">Stay in the loop</h2>
-          <p className="mt-4 text-lg text-muted-foreground">Monthly insights on performance marketing, attribution, and growth strategy.</p>
+          <h2 className="text-[44px] font-semibold">Stay in the loop</h2>
+          <p className="mt-4 text-base text-muted-foreground">Monthly insights on performance marketing, attribution, and growth strategy.</p>
           <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row">
-            <input type="email" placeholder="your@email.com" className="flex-1 rounded-xl border border-border bg-background px-4 py-3 text-base outline-none" />
-            <button className="rounded-xl bg-primary px-7 py-3 text-base font-medium text-primary-foreground">Subscribe</button>
+            <input type="email" placeholder="your@email.com" className="flex-1 rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none" />
+            <button className="rounded-xl bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground">Subscribe</button>
           </div>
         </div>
       </section>

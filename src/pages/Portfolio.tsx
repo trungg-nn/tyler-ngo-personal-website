@@ -1,21 +1,68 @@
 import Layout from "@/components/Layout";
 
+const projects = [
+  {
+    type: "B2B SaaS Platform",
+    title: "Enterprise SaaS Pipeline Acceleration",
+    desc: "Restructured the full-funnel paid strategy with multi-touch attribution, driving a 35% increase in qualified pipeline while reducing CPA by 18%.",
+    tags: ["Paid Search", "LinkedIn Ads", "Attribution"],
+    metric: "+35% qualified pipeline in 6 months",
+  },
+  {
+    type: "DTC Fashion Brand",
+    title: "E-Commerce CPA Reduction at Scale",
+    desc: "Overhauled creative testing frameworks and landing page optimisation to cut acquisition costs while scaling monthly spend to £1.2M.",
+    tags: ["Meta Ads", "Google Shopping", "CRO"],
+    metric: "-22% CPA across all channels",
+  },
+  {
+    type: "Fintech Scale-Up",
+    title: "Attribution Model Transformation",
+    desc: "Designed and implemented a hybrid attribution model combining media mix modelling with incrementality testing to unlock true channel impact.",
+    tags: ["MMM", "Incrementality", "Data Engineering"],
+    metric: "+40% attribution accuracy",
+  },
+  {
+    type: "EdTech Company",
+    title: "Multi-Market Expansion Strategy",
+    desc: "Led the performance marketing expansion into 3 European markets, building localised acquisition funnels and managing £5M monthly budgets.",
+    tags: ["Programmatic", "Localisation", "Strategy"],
+    metric: "3 new markets, £5M/mo budget",
+  },
+];
+
 export default function Portfolio() {
   return (
     <Layout>
-      <section className="mx-auto w-full max-w-5xl px-4 py-16">
-        <h1 className="mb-8 text-4xl font-bold">Portfolio</h1>
-        <div className="grid gap-5 md:grid-cols-2">
-          {[
-            "B2B Pipeline Optimisation (+35% pipeline, -22% CPA)",
-            "Offline Conversion Attribution (+40% accuracy)",
-            "High-Scale UA Engine (£5M/mo budget)",
-          ].map((item) => (
-            <article key={item} className="rounded-xl border border-border bg-card p-6">
-              <h2 className="text-lg font-semibold">{item}</h2>
-              <p className="mt-2 text-muted-foreground">Challenge → Approach → Result.</p>
-            </article>
-          ))}
+      <section className="border-b border-border/60 bg-background py-20">
+        <div className="mx-auto w-full max-w-6xl px-6">
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Portfolio</p>
+          <h1 className="text-6xl font-bold">Selected work</h1>
+          <p className="mt-5 max-w-2xl text-xl text-muted-foreground">
+            Case studies showcasing measurable business outcomes through performance marketing strategy.
+          </p>
+
+          <div className="mt-14 space-y-5">
+            {projects.map((p) => (
+              <article key={p.title} className="rounded-2xl border border-border bg-card/55 p-8">
+                <div className="grid gap-7 md:grid-cols-[1.7fr_1fr] md:items-start">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{p.type}</p>
+                    <h2 className="mt-3 text-4xl font-semibold leading-tight">{p.title}</h2>
+                    <p className="mt-4 text-lg text-muted-foreground">{p.desc}</p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {p.tags.map((tag) => (
+                        <span key={tag} className="rounded-full bg-secondary px-3 py-1 text-sm text-secondary-foreground">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="text-right text-4xl font-semibold text-primary md:pt-6">{p.metric}</div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
     </Layout>

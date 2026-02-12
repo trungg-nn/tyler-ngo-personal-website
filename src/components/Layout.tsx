@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import SiteFooter from "@/components/SiteFooter";
 
 const links = [
   { to: "/", label: "Home" },
@@ -40,6 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </nav>
       </header>
       <main>{children}</main>
+      <SiteFooter />
     </div>
   );
 }

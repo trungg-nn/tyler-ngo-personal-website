@@ -89,49 +89,61 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
 
-              <div className="relative flex items-center justify-between md:hidden">
+              <div className="flex items-center justify-between md:hidden">
+                <Link to="/" className="font-display text-2xl font-semibold tracking-tight">
+                  Tyler<span className="text-[#d4b377]">.</span>Ngo
+                </Link>
+
                 <button
                   type="button"
                   onClick={() => setMobileOpen((v) => !v)}
                   className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-background/55 text-muted-foreground transition-all duration-300 hover:text-foreground"
                   aria-label="Toggle navigation menu"
                 >
-                  {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+                  {mobileOpen ? <X size={20} /> : <Menu size={20} />}
                 </button>
-
-                <Link to="/" className="absolute left-1/2 -translate-x-1/2 font-display text-2xl font-semibold tracking-tight">
-                  Tyler<span className="text-[#d4b377]">.</span>Ngo
-                </Link>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={toggleTheme}
-                    className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-background/55 text-muted-foreground transition-all duration-300 hover:text-foreground"
-                    aria-label="Toggle theme"
-                    title="Toggle light/dark mode"
-                  >
-                    {isDark ? <Sun size={16} /> : <Moon size={16} />}
-                  </button>
-                  <Link to="/contact" className="cta-btn rounded-xl px-3.5 py-2 text-xs font-medium">
-                    Get in Touch
-                  </Link>
-                </div>
               </div>
             </nav>
 
             {mobileOpen && (
-              <div className="mt-2 rounded-2xl border border-border/70 bg-card/85 p-3 shadow-[0_10px_24px_rgba(0,0,0,0.16)] backdrop-blur-xl md:hidden">
-                <div className="grid gap-2">
-                  {links.map((l) => (
-                    <Link
-                      key={l.to}
-                      to={l.to}
-                      className={`rounded-lg px-3 py-2 text-sm transition-colors ${location.pathname === l.to ? "bg-secondary text-foreground" : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"}`}
+              <div className="fixed inset-0 z-40 bg-background/95 backdrop-blur-sm md:hidden">
+                <div className="mx-auto w-full max-w-7xl px-6 pt-8">
+                  <div className="mb-8 flex items-center justify-between">
+                    <span className="font-display text-2xl font-semibold tracking-tight">Tyler<span className="text-[#d4b377]">.</span>Ngo</span>
+                    <button
+                      type="button"
+                      onClick={() => setMobileOpen(false)}
+                      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-background/55 text-muted-foreground"
+                      aria-label="Close menu"
                     >
-                      {l.label}
-                    </Link>
-                  ))}
+                      <X size={20} />
+                    </button>
+                  </div>
+
+                  <div className="grid gap-3">
+                    {links.map((l) => (
+                      <Link
+                        key={l.to}
+                        to={l.to}
+                        className={`text-4xl font-medium leading-tight transition-colors ${location.pathname === l.to ? "text-primary" : "text-foreground/90 hover:text-foreground"}`}
+                      >
+                        {l.label}
+                      </Link>
+                    ))}
+                    <div className="mt-6 flex items-center gap-3">
+                      <button
+                        type="button"
+                        onClick={toggleTheme}
+                        className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border/70 bg-background/55 text-muted-foreground"
+                        aria-label="Toggle theme"
+                      >
+                        {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                      </button>
+                      <Link to="/contact" className="cta-btn inline-flex items-center rounded-xl px-5 py-2.5 text-sm font-medium">
+                        Get in Touch
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}

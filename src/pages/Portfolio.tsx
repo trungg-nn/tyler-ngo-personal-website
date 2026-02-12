@@ -37,8 +37,8 @@ export default function Portfolio() {
       <section className="border-b border-border/60 bg-background py-20">
         <div className="mx-auto w-full max-w-6xl px-6">
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Portfolio</p>
-          <h1 className="text-6xl font-bold">Selected work</h1>
-          <p className="mt-5 max-w-2xl text-xl text-muted-foreground">
+          <h1 className="text-5xl font-bold md:text-[52px]">Selected work</h1>
+          <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-[17px]">
             Case studies showcasing measurable business outcomes through performance marketing strategy.
           </p>
 
@@ -48,8 +48,8 @@ export default function Portfolio() {
                 <div className="grid gap-7 md:grid-cols-[1.7fr_1fr] md:items-start">
                   <div>
                     <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{p.type}</p>
-                    <h2 className="mt-3 text-4xl font-semibold leading-tight">{p.title}</h2>
-                    <p className="mt-4 text-lg text-muted-foreground">{p.desc}</p>
+                    <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-[42px]">{p.title}</h2>
+                    <p className="mt-3 text-sm text-muted-foreground md:text-base">{p.desc}</p>
                     <div className="mt-5 flex flex-wrap gap-2">
                       {p.tags.map((tag) => (
                         <span key={tag} className="rounded-full bg-secondary px-3 py-1 text-sm text-secondary-foreground">
@@ -58,7 +58,7 @@ export default function Portfolio() {
                       ))}
                     </div>
                   </div>
-                  <div className="text-right text-4xl font-semibold text-primary md:pt-6">{p.metric}</div>
+                  <div className="text-right text-3xl font-semibold text-primary md:pt-6 md:text-[42px]">{p.metric}</div>
                 </div>
               </article>
             ))}

@@ -7,15 +7,15 @@ export default function Contact() {
       <section className="border-b border-border/50 bg-background py-16 md:py-20">
         <div className="mx-auto w-full max-w-5xl px-6">
           <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Contact</p>
-          <h1 className="text-6xl font-semibold">Let’s connect</h1>
-          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+          <h1 className="text-5xl font-semibold md:text-[52px]">Let’s connect</h1>
+          <p className="mt-3 max-w-2xl text-base text-muted-foreground">
             Interested in working together or just want to chat about performance marketing? Reach out.
           </p>
 
           <div className="mt-10 grid gap-6 md:grid-cols-[0.9fr_1.4fr]">
             <div className="space-y-4">
               <article className="rounded-2xl border border-border bg-card/55 p-5">
-                <h2 className="text-2xl font-semibold">Direct contact</h2>
+                <h2 className="text-xl font-semibold">Direct contact</h2>
                 <div className="mt-4 space-y-3 text-sm text-muted-foreground">
                   <p className="inline-flex items-center gap-2"><Mail size={14} /> trungngo.2810@gmail.com</p>
                   <p className="inline-flex items-center gap-2"><Phone size={14} /> +44 7763 464 335</p>
@@ -24,7 +24,7 @@ export default function Contact() {
               </article>
 
               <article className="rounded-2xl border border-border bg-card/55 p-5">
-                <h2 className="text-2xl font-semibold">Response time</h2>
+                <h2 className="text-xl font-semibold">Response time</h2>
                 <p className="mt-2 text-sm text-muted-foreground">I typically respond within 24 hours on business days.</p>
               </article>
             </div>

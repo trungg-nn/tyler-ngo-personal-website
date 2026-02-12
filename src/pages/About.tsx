@@ -27,9 +27,9 @@ export default function About() {
       <section className="border-b border-border/50 bg-background py-16 md:py-20">
         <div className="mx-auto w-full max-w-5xl px-6">
           <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">About</p>
-          <h1 className="text-6xl font-semibold">Tyler Ngo</h1>
+          <h1 className="text-5xl font-semibold md:text-[52px]">Tyler Ngo</h1>
 
-          <div className="mt-8 space-y-6 text-[18px] leading-[1.7] text-muted-foreground">
+          <div className="mt-7 space-y-5 text-base leading-[1.7] text-muted-foreground">
             <p>
               I’m a Performance Marketing Manager based in London, specialising in full-funnel growth strategy for ambitious B2B and consumer brands. My work sits at the intersection of data, creative, and media— turning complex attribution challenges into clear growth roadmaps.
             </p>
@@ -48,7 +48,7 @@ export default function About() {
           </div>
 
           <div className="mt-14">
-            <h2 className="text-4xl font-semibold">Core strengths</h2>
+            <h2 className="text-3xl font-semibold md:text-[38px]">Core strengths</h2>
             <div className="mt-5 flex flex-wrap gap-3">
               {strengths.map((item) => (
                 <span key={item} className="rounded-xl border border-border bg-card/55 px-4 py-2 text-sm text-muted-foreground">
@@ -59,7 +59,7 @@ export default function About() {
           </div>
 
           <div className="mt-14">
-            <h2 className="text-4xl font-semibold">Education</h2>
+            <h2 className="text-3xl font-semibold md:text-[38px]">Education</h2>
             <div className="mt-5 space-y-4">
               <article className="rounded-2xl border border-border bg-card/55 px-5 py-4">
                 <h3 className="text-2xl font-semibold">MSc Digital Marketing</h3>

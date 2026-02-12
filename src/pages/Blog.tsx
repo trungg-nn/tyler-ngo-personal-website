@@ -57,7 +57,7 @@ export default function Blog() {
       <section className="border-b border-border/50 bg-background py-16 md:py-20">
         <div className="mx-auto w-full max-w-5xl px-6">
           <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Blog</p>
-          <h1 className="text-[54px] font-semibold leading-tight">Insights & ideas</h1>
+          <h1 className="text-5xl font-semibold leading-tight md:text-[50px]">Insights & ideas</h1>
           <p className="mt-4 text-base text-muted-foreground">
             Thinking on performance marketing, growth strategy, and the future of digital.
           </p>
@@ -75,7 +75,7 @@ export default function Blog() {
                   <span className="text-xs text-muted-foreground">{post.date}</span>
                 </div>
 
-                <h2 className="text-2xl font-semibold leading-tight md:text-[34px]">{post.title}</h2>
+                <h2 className="text-xl font-semibold leading-tight md:text-[30px]">{post.title}</h2>
                 <p className="mt-2 text-sm text-muted-foreground">{post.excerpt}</p>
               </article>
             ))}

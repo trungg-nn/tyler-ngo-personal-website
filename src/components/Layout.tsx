@@ -84,7 +84,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </nav>
           </div>
         </header>
-        <main>{children}</main>
+        <main className="page-enter">{children}</main>
         <SiteFooter />
       </div>
     </LanguageContext.Provider>

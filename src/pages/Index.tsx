@@ -1,13 +1,42 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, TrendingUp, Target, BarChart3, Zap, Mail, MapPin } from "lucide-react";
 import Layout from "@/components/Layout";
 import MetricCard from "@/components/MetricCard";
 
 const metrics = [
   { value: "+35%", label: "Qualified Pipeline" },
-  { value: "-22%", label: "CPA Reduction" },
+  { value: "-22%", label: "Cost Per Acquisition" },
   { value: "+40%", label: "Attribution Accuracy" },
   { value: "£5M/mo", label: "Budget Managed" },
+];
+
+const capabilities = [
+  {
+    icon: TrendingUp,
+    title: "Full-Funnel Growth",
+    desc: "End-to-end strategy from awareness to conversion, optimized at every stage.",
+  },
+  {
+    icon: Target,
+    title: "Performance Media",
+    desc: "Precision-targeted paid campaigns across search, social, and programmatic.",
+  },
+  {
+    icon: BarChart3,
+    title: "Attribution & Analytics",
+    desc: "Multi-touch attribution models that reveal true marketing impact.",
+  },
+  {
+    icon: Zap,
+    title: "Experimentation",
+    desc: "Rigorous A/B testing and rapid iteration to unlock compounding gains.",
+  },
+];
+
+const featuredArticles = [
+  { title: "Why Multi-Touch Attribution Changes Everything", tag: "Attribution", date: "Jan 2026" },
+  { title: "Scaling Paid Media Without Scaling Waste", tag: "Performance", date: "Dec 2025" },
+  { title: "The Experimentation Playbook for B2B", tag: "Strategy", date: "Nov 2025" },
 ];
 
 export default function Index() {
@@ -16,12 +45,13 @@ export default function Index() {
       <section className="hero-bg relative overflow-hidden border-b border-border/60">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_50%,rgba(99,102,241,0.14),transparent_28%)]" />
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] bg-[linear-gradient(110deg,transparent_0%,rgba(120,130,255,0.08)_42%,transparent_75%)] md:block" />
-        <div className="mx-auto w-full max-w-6xl px-6 pb-28 pt-28 md:pt-36">
+
+        <div className="mx-auto w-full max-w-6xl px-6 pb-20 pt-24 md:pt-32">
           <div className="max-w-3xl">
             <p className="mb-6 inline-flex items-center rounded-full border border-primary/30 bg-card/30 px-4 py-1.5 text-sm text-primary">
               • Performance Marketing Manager · London
             </p>
-            <h1 className="text-[56px] font-bold leading-[1.02] md:text-[84px]">
+            <h1 className="text-5xl font-bold leading-[1.05] md:text-7xl">
               Driving growth through <span className="text-gradient-gold">data, media & experimentation</span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg text-muted-foreground md:text-2xl md:leading-[1.35]">
@@ -36,14 +66,107 @@ export default function Index() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="mt-16 grid grid-cols-2 gap-4 md:grid-cols-4">
+      <section className="border-b border-border/50 bg-background py-20">
+        <div className="mx-auto w-full max-w-6xl px-6">
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Results</p>
+          <h2 className="mb-10 text-5xl font-semibold">Numbers that speak</h2>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {metrics.map((m) => (
               <MetricCard key={m.label} {...m} />
             ))}
           </div>
         </div>
       </section>
+
+      <section className="border-b border-border/50 bg-card/30 py-20">
+        <div className="mx-auto w-full max-w-6xl px-6">
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Expertise</p>
+          <h2 className="mb-10 text-5xl font-semibold">What I do best</h2>
+          <div className="grid gap-5 md:grid-cols-2">
+            {capabilities.map((c) => (
+              <article key={c.title} className="rounded-2xl border border-border bg-background/70 p-7">
+                <div className="mb-5 inline-flex rounded-xl border border-border bg-card/50 p-3">
+                  <c.icon size={20} className="text-primary" />
+                </div>
+                <h3 className="mb-2 text-3xl font-semibold">{c.title}</h3>
+                <p className="text-lg text-muted-foreground">{c.desc}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border/50 bg-background py-20">
+        <div className="mx-auto w-full max-w-6xl px-6">
+          <div className="mb-10 flex items-end justify-between">
+            <div>
+              <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Insights</p>
+              <h2 className="text-5xl font-semibold">Latest thinking</h2>
+            </div>
+            <Link to="/blog" className="hidden items-center gap-2 text-primary md:inline-flex">
+              All articles <ArrowRight size={14} />
+            </Link>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            {featuredArticles.map((a) => (
+              <article key={a.title} className="rounded-2xl border border-border bg-card/60 p-6">
+                <span className="mb-4 inline-block rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">{a.tag}</span>
+                <h3 className="mb-3 text-2xl font-semibold leading-tight">{a.title}</h3>
+                <p className="text-sm text-muted-foreground">{a.date}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-border/50 bg-card/30 py-20">
+        <div className="mx-auto w-full max-w-3xl px-6 text-center">
+          <h2 className="text-5xl font-semibold">Stay in the loop</h2>
+          <p className="mt-4 text-lg text-muted-foreground">Monthly insights on performance marketing, attribution, and growth strategy.</p>
+          <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row">
+            <input
+              type="email"
+              placeholder="your@email.com"
+              className="flex-1 rounded-xl border border-border bg-background px-4 py-3 text-base outline-none"
+            />
+            <button className="rounded-xl bg-primary px-7 py-3 text-base font-medium text-primary-foreground">Subscribe</button>
+          </div>
+        </div>
+      </section>
+
+      <footer className="bg-card/25 py-16">
+        <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 md:grid-cols-3">
+          <div>
+            <h3 className="text-3xl font-semibold">Tyler.Ngo</h3>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Performance Marketing Manager driving full-funnel growth through data, media, and experimentation.
+            </p>
+          </div>
+          <div>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">Navigate</p>
+            <div className="space-y-2 text-lg">
+              <Link to="/portfolio" className="block text-muted-foreground hover:text-foreground">Portfolio</Link>
+              <Link to="/blog" className="block text-muted-foreground hover:text-foreground">Blog</Link>
+              <Link to="/about" className="block text-muted-foreground hover:text-foreground">About</Link>
+              <Link to="/contact" className="block text-muted-foreground hover:text-foreground">Contact</Link>
+            </div>
+          </div>
+          <div>
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">Contact</p>
+            <div className="space-y-3 text-lg text-muted-foreground">
+              <p className="inline-flex items-center gap-2"><Mail size={16} /> trungngo.2810@gmail.com</p>
+              <p className="inline-flex items-center gap-2"><MapPin size={16} /> London, UK</p>
+            </div>
+          </div>
+        </div>
+        <div className="mx-auto mt-12 w-full max-w-6xl border-t border-border/70 px-6 pt-8 text-center text-sm text-muted-foreground">
+          © 2026 Tyler Ngo. All rights reserved.
+        </div>
+      </footer>
     </Layout>
   );
 }

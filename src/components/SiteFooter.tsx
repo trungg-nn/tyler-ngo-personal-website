@@ -3,17 +3,17 @@ import { Mail, MapPin } from "lucide-react";
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-border/60 bg-card/25 py-10 md:py-12">
-      <div className="mx-auto grid w-full max-w-6xl gap-8 px-6 md:grid-cols-3 md:gap-12">
+    <footer className="border-t border-border/60 bg-card/25 py-12 md:py-14">
+      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 md:grid-cols-3 md:gap-16">
         <div>
           <h3 className="text-2xl font-semibold">Tyler.Ngo</h3>
-          <p className="mt-3 text-sm text-muted-foreground">
+          <p className="mt-3 max-w-[280px] text-sm leading-7 text-muted-foreground">
             Performance Marketing Manager driving full-funnel growth through data, media, and experimentation.
           </p>
         </div>
         <div>
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">Navigate</p>
-          <div className="space-y-2 text-sm">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-foreground">NAVIGATE</p>
+          <div className="space-y-3 text-sm">
             <Link to="/portfolio" className="block text-muted-foreground hover:text-foreground">Portfolio</Link>
             <Link to="/blog" className="block text-muted-foreground hover:text-foreground">Blog</Link>
             <Link to="/about" className="block text-muted-foreground hover:text-foreground">About</Link>
@@ -21,8 +21,8 @@ export default function SiteFooter() {
           </div>
         </div>
         <div>
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Contact</p>
-          <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+          <p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-foreground">CONTACT</p>
+          <div className="flex flex-col gap-3 text-sm text-muted-foreground">
             <div className="flex items-center gap-2 leading-none">
               <Mail size={14} />
               <span>trungngo.2810@gmail.com</span>

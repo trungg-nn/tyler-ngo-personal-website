@@ -25,7 +25,7 @@ export default function About() {
   return (
     <Layout>
       <section className="border-b border-border/50 bg-background py-16 md:py-20">
-        <div className="mx-auto w-full max-w-6xl px-6">
+        <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
           <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">About</p>
           <h1 className="text-5xl font-semibold md:text-[52px]">Tyler Ngo</h1>
 

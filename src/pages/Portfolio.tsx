@@ -34,22 +34,22 @@ const projects = [
 export default function Portfolio() {
   return (
     <Layout>
-      <section className="border-b border-border/60 bg-background py-20">
-        <div className="mx-auto w-full max-w-7xl px-6">
+      <section className="border-b border-border/60 bg-background py-16 md:py-20">
+        <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Portfolio</p>
           <h1 className="text-5xl font-bold md:text-[52px]">Selected work</h1>
           <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-[17px]">
             Case studies showcasing measurable business outcomes through performance marketing strategy.
           </p>
 
-          <div className="mt-14 space-y-5">
+          <div className="mt-12 space-y-5">
             {projects.map((p) => (
-              <article key={p.title} className="rounded-2xl border border-border bg-card/55 p-8">
-                <div className="grid gap-7 md:grid-cols-[1.7fr_1fr] md:items-start">
+              <article key={p.title} className="rounded-2xl border border-border bg-card/55 p-7 md:p-8">
+                <div className="grid gap-7 md:grid-cols-[1.55fr_1fr] md:items-start">
                   <div>
                     <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{p.type}</p>
-                    <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-[42px]">{p.title}</h2>
-                    <p className="mt-3 text-sm text-muted-foreground md:text-base">{p.desc}</p>
+                    <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-[40px]">{p.title}</h2>
+                    <p className="mt-3 max-w-[95%] text-sm text-muted-foreground md:text-base">{p.desc}</p>
                     <div className="mt-5 flex flex-wrap gap-2">
                       {p.tags.map((tag) => (
                         <span key={tag} className="rounded-full bg-secondary px-3 py-1 text-sm text-secondary-foreground">
@@ -58,7 +58,7 @@ export default function Portfolio() {
                       ))}
                     </div>
                   </div>
-                  <div className="text-right text-3xl font-semibold md:pt-6 md:text-[42px]"><span className="text-gradient-gold">{p.metric}</span></div>
+                  <div className="text-right text-3xl font-semibold md:pt-5 md:text-[36px] md:leading-tight md:whitespace-nowrap"><span className="text-gradient-gold">{p.metric}</span></div>
                 </div>
               </article>
             ))}

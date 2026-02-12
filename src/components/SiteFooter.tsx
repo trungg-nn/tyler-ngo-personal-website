@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, Linkedin, Instagram, Facebook } from "lucide-react";
 import { useLanguage } from "@/components/Layout";
 
 export default function SiteFooter() {
@@ -14,7 +14,9 @@ export default function SiteFooter() {
       blog: "Blog",
       about: "About",
       contactLink: "Contact",
-      location: "London, UK",
+      linkedin: "LinkedIn",
+      instagram: "Instagram",
+      facebook: "Facebook",
       rights: "© 2026 Tyler Ngo. All rights reserved.",
     },
     vi: {
@@ -25,7 +27,9 @@ export default function SiteFooter() {
       blog: "Bài viết",
       about: "Giới thiệu",
       contactLink: "Liên hệ",
-      location: "London, UK",
+      linkedin: "LinkedIn",
+      instagram: "Instagram",
+      facebook: "Facebook",
       rights: "© 2026 Tyler Ngo. Đã đăng ký bản quyền.",
     },
   }[lang];
@@ -53,10 +57,18 @@ export default function SiteFooter() {
               <Mail size={14} />
               <span>trungngo.2810@gmail.com</span>
             </div>
-            <div className="flex items-center gap-2 leading-none">
-              <MapPin size={14} />
-              <span>{t.location}</span>
-            </div>
+            <a href="#" className="flex items-center gap-2 leading-none transition-colors hover:text-foreground">
+              <Linkedin size={14} />
+              <span>{t.linkedin}</span>
+            </a>
+            <a href="#" className="flex items-center gap-2 leading-none transition-colors hover:text-foreground">
+              <Instagram size={14} />
+              <span>{t.instagram}</span>
+            </a>
+            <a href="#" className="flex items-center gap-2 leading-none transition-colors hover:text-foreground">
+              <Facebook size={14} />
+              <span>{t.facebook}</span>
+            </a>
           </div>
         </div>
       </div>

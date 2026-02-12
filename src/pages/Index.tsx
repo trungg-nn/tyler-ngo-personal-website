@@ -40,11 +40,11 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="border-b border-border/50 bg-background py-20">
+      <section className="border-b border-border/50 bg-background py-24 md:py-28">
         <div className="mx-auto w-full max-w-6xl px-6">
-          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Results</p>
-          <h2 className="mb-10 text-5xl font-semibold">Numbers that speak</h2>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">{metrics.map((m) => <MetricCard key={m.label} {...m} />)}</div>
+          <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary">Results</p>
+          <h2 className="mb-12 text-5xl font-semibold md:text-[52px]">Numbers that speak</h2>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">{metrics.map((m) => <MetricCard key={m.label} {...m} />)}</div>
         </div>
       </section>
 

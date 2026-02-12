@@ -48,16 +48,16 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="border-b border-border/50 bg-card/30 py-20">
+      <section className="border-b border-border/50 bg-card/30 py-20 md:py-24">
         <div className="mx-auto w-full max-w-6xl px-6">
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Expertise</p>
-          <h2 className="mb-10 text-5xl font-semibold">What I do best</h2>
+          <h2 className="mb-10 text-[52px] font-semibold leading-tight">What I do best</h2>
           <div className="grid gap-5 md:grid-cols-2">
             {capabilities.map((c) => (
-              <article key={c.title} className="rounded-2xl border border-border bg-background/70 p-7">
-                <div className="mb-5 inline-flex rounded-xl border border-border bg-card/50 p-3"><c.icon size={20} className="text-primary" /></div>
-                <h3 className="mb-2 text-3xl font-semibold">{c.title}</h3>
-                <p className="text-lg text-muted-foreground">{c.desc}</p>
+              <article key={c.title} className="rounded-2xl border border-border bg-background/72 px-6 py-6 md:min-h-[174px]">
+                <div className="mb-5 inline-flex rounded-xl border border-border bg-card/50 p-3"><c.icon size={18} className="text-primary" /></div>
+                <h3 className="mb-2 text-2xl font-semibold leading-tight md:text-[34px]">{c.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground md:text-[17px]">{c.desc}</p>
               </article>
             ))}
           </div>

@@ -122,19 +122,6 @@
     background-image: linear-gradient(135deg, #f0d7a2, #c9a96e, #ad8852);
   }
 
-  .hero-highlight {
-    background: hsla(41, 36%, 56%, 0.22);
-    border-radius: 0.28em;
-    padding: 0.02em 0.16em 0.08em;
-    box-decoration-break: clone;
-    -webkit-box-decoration-break: clone;
-  }
-
-  .dark .hero-highlight {
-    background: transparent;
-    padding: 0;
-  }
-
   .reveal-up {
     opacity: 0;
     transform: translateY(16px);

@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/65 backdrop-blur-xl">
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
           <Link to="/" className="font-display text-2xl font-semibold tracking-tight">
-            Tyler<span className="text-primary">.</span>Ngo
+            Tyler<span className="text-[#d4b377]">.</span>Ngo
           </Link>
           <div className="hidden items-center gap-8 text-sm md:flex">
             {links.map((l) => (

@@ -6,7 +6,7 @@ export default function SiteFooter() {
     <footer className="border-t border-border/60 bg-card/25 py-12 md:py-14">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 md:grid-cols-3 md:gap-16">
         <div>
-          <h3 className="text-2xl font-semibold">Tyler.Ngo</h3>
+          <h3 className="text-2xl font-semibold">Tyler<span className="text-[#d4b377]">.</span>Ngo</h3>
           <p className="mt-3 max-w-[280px] text-sm leading-7 text-muted-foreground">
             Performance Marketing Manager driving full-funnel growth through data, media, and experimentation.
           </p>

@@ -47,7 +47,7 @@ export default function Contact() {
 
           <div className="mt-10 grid gap-6 md:grid-cols-[0.9fr_1.4fr]">
             <div className="space-y-4">
-              <article className="rounded-2xl border border-border bg-card/55 p-5">
+              <article className="interactive-card rounded-2xl border border-border bg-card/55 p-5">
                 <h2 className="text-xl font-semibold">{t.direct}</h2>
                 <div className="mt-4 flex flex-col gap-3 text-sm text-muted-foreground">
                   <div className="flex items-center gap-2 leading-none"><Mail size={14} className="shrink-0" /><span>trungngo.2810@gmail.com</span></div>
@@ -56,13 +56,13 @@ export default function Contact() {
                 </div>
               </article>
 
-              <article className="rounded-2xl border border-border bg-card/55 p-5">
+              <article className="interactive-card rounded-2xl border border-border bg-card/55 p-5">
                 <h2 className="text-xl font-semibold">{t.response}</h2>
                 <p className="mt-2 text-sm text-muted-foreground">{t.responseText}</p>
               </article>
             </div>
 
-            <form className="rounded-2xl border border-border bg-card/55 p-5">
+            <form className="interactive-card rounded-2xl border border-border bg-card/55 p-5">
               <div className="space-y-4">
                 <div>
                   <label className="mb-2 block text-sm text-foreground">{t.name}</label>

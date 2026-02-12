@@ -88,7 +88,7 @@ export default function Portfolio() {
 
           <div className="mt-10 space-y-4">
             {projects[lang].map((p) => (
-              <article key={p.title} className="rounded-2xl border border-border bg-card/55 p-6 md:p-6">
+              <article key={p.title} className="interactive-card rounded-2xl border border-border bg-card/55 p-6 md:p-6">
                 <div className="grid gap-6 md:grid-cols-[1.9fr_0.8fr] md:items-start">
                   <div>
                     <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{p.type}</p>

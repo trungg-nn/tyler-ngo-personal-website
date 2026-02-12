@@ -68,7 +68,7 @@ export default function About() {
             <h2 className="text-3xl font-semibold md:text-[38px]">{t.core}</h2>
             <div className="mt-5 flex flex-wrap gap-3">
               {strengths[lang].map((item) => (
-                <span key={item} className="rounded-xl border border-border bg-card/55 px-4 py-2 text-sm text-muted-foreground">{item}</span>
+                <span key={item} className="rounded-xl border border-border bg-card/55 px-4 py-2 text-sm text-muted-foreground transition-colors duration-300 hover:border-primary/45 hover:text-foreground">{item}</span>
               ))}
             </div>
           </div>
@@ -76,11 +76,11 @@ export default function About() {
           <div className="mt-14">
             <h2 className="text-3xl font-semibold md:text-[38px]">{t.edu}</h2>
             <div className="mt-5 space-y-4">
-              <article className="rounded-2xl border border-border bg-card/55 px-5 py-4">
+              <article className="interactive-card rounded-2xl border border-border bg-card/55 px-5 py-4">
                 <h3 className="text-2xl font-semibold">MSc Digital Marketing</h3>
                 <p className="mt-1 text-sm text-muted-foreground">University of London</p>
               </article>
-              <article className="rounded-2xl border border-border bg-card/55 px-5 py-4">
+              <article className="interactive-card rounded-2xl border border-border bg-card/55 px-5 py-4">
                 <h3 className="text-2xl font-semibold">BSc Business Administration</h3>
                 <p className="mt-1 text-sm text-muted-foreground">University of Economics, Vietnam</p>
               </article>

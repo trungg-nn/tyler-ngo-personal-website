@@ -120,7 +120,7 @@ export default function Index() {
           <h2 className="mb-8 text-[44px] font-semibold leading-tight">{t.whatBest}</h2>
           <div className="grid gap-5 md:grid-cols-2">
             {capabilities[lang].map((c, i) => (
-              <article key={c.title} className="reveal-up rounded-2xl border border-border bg-background/72 px-6 py-6 md:min-h-[154px]" style={{ animationDelay: `${120 + i * 90}ms` }}>
+              <article key={c.title} className="reveal-up interactive-card rounded-2xl border border-border bg-background/72 px-6 py-6 md:min-h-[154px]" style={{ animationDelay: `${120 + i * 90}ms` }}>
                 <div className="mb-4 inline-flex rounded-xl border border-border bg-card/50 p-3"><c.icon size={16} className="text-primary" /></div>
                 <h3 className="mb-2 text-[28px] font-semibold leading-tight md:text-[30px]">{c.title}</h3>
                 <p className="text-[14px] leading-relaxed text-muted-foreground">{c.desc}</p>
@@ -138,7 +138,7 @@ export default function Index() {
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {featuredArticles[lang].map((a) => (
-              <article key={a.title} className="rounded-2xl border border-border bg-card/60 p-5">
+              <article key={a.title} className="interactive-card rounded-2xl border border-border bg-card/60 p-5">
                 <span className="mb-4 inline-block rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">{a.tag}</span>
                 <h3 className="mb-3 text-xl font-semibold leading-tight">{a.title}</h3>
                 <p className="text-sm text-muted-foreground">{a.date}</p>

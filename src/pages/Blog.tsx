@@ -38,7 +38,7 @@ export default function Blog() {
 
           <div className="mt-12 space-y-0">
             {posts[lang].map((post) => (
-              <article key={post.title} className="border-b border-border/70 py-8">
+              <article key={post.title} className="border-b border-border/70 py-8 transition-colors duration-300 hover:bg-card/20">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <div className="inline-flex items-center gap-3">
                     <span className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">{post.tag}</span>

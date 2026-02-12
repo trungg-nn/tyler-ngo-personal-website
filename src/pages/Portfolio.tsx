@@ -58,7 +58,7 @@ export default function Portfolio() {
                       ))}
                     </div>
                   </div>
-                  <div className="text-right text-xl font-semibold md:pt-3 md:text-[24px] md:leading-tight">
+                  <div className="text-right text-xl font-semibold md:pt-3 md:text-[22px] md:leading-tight md:whitespace-nowrap">
                     <span className="text-gradient-gold">{p.metric}</span>
                   </div>
                 </div>

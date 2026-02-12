@@ -31,8 +31,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-30 border-b border-border/60 bg-background/55 backdrop-blur-2xl dark:bg-background/35">
-        <nav className="mx-auto mt-2 flex w-full max-w-7xl items-center justify-between rounded-2xl border border-border/70 bg-card/70 px-6 py-3 shadow-[0_8px_24px_rgba(15,20,40,0.08)] backdrop-blur-xl dark:border-border/60 dark:bg-card/35 dark:shadow-[0_10px_30px_rgba(0,0,0,0.16)]">
+      <header className="sticky top-0 z-30 border-b border-border/70 bg-background/75 backdrop-blur-xl dark:border-border/60 dark:bg-background/35 dark:backdrop-blur-2xl">
+        <nav className="mx-auto mt-2 flex w-full max-w-7xl items-center justify-between rounded-2xl border border-border/70 bg-card/80 px-6 py-3 shadow-[0_6px_18px_rgba(35,30,20,0.06)] backdrop-blur-xl dark:border-border/60 dark:bg-card/35 dark:shadow-[0_10px_30px_rgba(0,0,0,0.16)]">
           <Link to="/" className="font-display text-2xl font-semibold tracking-tight">
             Tyler<span className="text-[#d4b377]">.</span>Ngo
           </Link>

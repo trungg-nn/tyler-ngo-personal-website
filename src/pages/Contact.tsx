@@ -16,10 +16,19 @@ export default function Contact() {
             <div className="space-y-4">
               <article className="rounded-2xl border border-border bg-card/55 p-5">
                 <h2 className="text-xl font-semibold">Direct contact</h2>
-                <div className="mt-4 space-y-3 text-sm text-muted-foreground">
-                  <p className="inline-flex items-center gap-2"><Mail size={14} /> trungngo.2810@gmail.com</p>
-                  <p className="inline-flex items-center gap-2"><Phone size={14} /> +44 7763 464 335</p>
-                  <p className="inline-flex items-center gap-2"><MapPin size={14} /> London, United Kingdom</p>
+                <div className="mt-4 flex flex-col gap-3 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 leading-none">
+                    <Mail size={14} className="shrink-0" />
+                    <span>trungngo.2810@gmail.com</span>
+                  </div>
+                  <div className="flex items-center gap-2 leading-none">
+                    <Phone size={14} className="shrink-0" />
+                    <span>+44 7763 464 335</span>
+                  </div>
+                  <div className="flex items-center gap-2 leading-none">
+                    <MapPin size={14} className="shrink-0" />
+                    <span>London, United Kingdom</span>
+                  </div>
                 </div>
               </article>
 

@@ -50,6 +50,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   return (
     <LanguageContext.Provider value={{ lang, setLanguage: () => {} }}>
       <div className="min-h-screen bg-background text-foreground">
@@ -106,7 +113,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </nav>
 
             {mobileOpen && (
-              <div className="fixed inset-0 z-40 bg-background/95 backdrop-blur-sm md:hidden">
+              <div className="fixed inset-0 z-[120] bg-background md:hidden">
                 <div className="mx-auto w-full max-w-7xl px-6 pt-8">
                   <div className="mb-8 flex items-center justify-between">
                     <span className="font-display text-2xl font-semibold tracking-tight">Tyler<span className="text-[#d4b377]">.</span>Ngo</span>

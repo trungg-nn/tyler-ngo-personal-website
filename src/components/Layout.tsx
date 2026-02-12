@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-30 border-b border-border/60 bg-background/65 backdrop-blur-xl">
-        <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
+        <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5">
           <Link to="/" className="font-display text-2xl font-semibold tracking-tight">
             Tyler<span className="text-[#d4b377]">.</span>Ngo
           </Link>

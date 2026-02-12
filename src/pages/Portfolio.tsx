@@ -35,7 +35,7 @@ export default function Portfolio() {
   return (
     <Layout>
       <section className="border-b border-border/60 bg-background py-20">
-        <div className="mx-auto w-full max-w-6xl px-6">
+        <div className="mx-auto w-full max-w-7xl px-6">
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-primary">Portfolio</p>
           <h1 className="text-5xl font-bold md:text-[52px]">Selected work</h1>
           <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-[17px]">
@@ -58,7 +58,7 @@ export default function Portfolio() {
                       ))}
                     </div>
                   </div>
-                  <div className="text-right text-3xl font-semibold text-primary md:pt-6 md:text-[42px]">{p.metric}</div>
+                  <div className="text-right text-3xl font-semibold md:pt-6 md:text-[42px]"><span className="text-gradient-gold">{p.metric}</span></div>
                 </div>
               </article>
             ))}

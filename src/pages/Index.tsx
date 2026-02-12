@@ -27,7 +27,7 @@ export default function Index() {
   return (
     <Layout>
       <section className="hero-bg relative overflow-hidden border-b border-border/60">
-        <div className="mx-auto w-full max-w-6xl px-6 pb-20 pt-24 md:pt-32 reveal-up">
+        <div className="mx-auto w-full max-w-7xl px-6 pb-20 pt-24 md:pt-32 reveal-up">
           <div className="max-w-3xl">
             <p className="mb-6 inline-flex items-center rounded-full border border-primary/30 bg-card/30 px-4 py-1.5 text-sm text-primary">• Performance Marketing Manager · London</p>
             <h1 className="text-4xl font-bold leading-[1.08] md:text-[72px]">Driving growth through <span className="text-gradient-gold">data, media & experimentation</span></h1>
@@ -41,7 +41,7 @@ export default function Index() {
       </section>
 
       <section className="border-b border-border/50 bg-background py-24 md:py-28 reveal-up" style={{ animationDelay: '120ms' }}>
-        <div className="mx-auto w-full max-w-6xl px-6">
+        <div className="mx-auto w-full max-w-7xl px-6">
           <p className="mb-2 text-xs uppercase tracking-[0.2em] text-primary">Results</p>
           <h2 className="mb-12 text-5xl font-semibold md:text-[52px]">Numbers that speak</h2>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">{metrics.map((m) => <MetricCard key={m.label} {...m} />)}</div>
@@ -49,7 +49,7 @@ export default function Index() {
       </section>
 
       <section className="border-b border-border/50 bg-card/30 py-16 md:py-20">
-        <div className="mx-auto w-full max-w-6xl px-6">
+        <div className="mx-auto w-full max-w-7xl px-6">
           <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Expertise</p>
           <h2 className="mb-8 text-[44px] font-semibold leading-tight">What I do best</h2>
           <div className="grid gap-5 md:grid-cols-2">
@@ -65,7 +65,7 @@ export default function Index() {
       </section>
 
       <section className="border-b border-border/50 bg-background py-16">
-        <div className="mx-auto w-full max-w-6xl px-6">
+        <div className="mx-auto w-full max-w-7xl px-6">
           <div className="mb-10 flex items-end justify-between">
             <div><p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Insights</p><h2 className="text-[44px] font-semibold">Latest thinking</h2></div>
             <Link to="/blog" className="hidden items-center gap-2 text-primary md:inline-flex">All articles <ArrowRight size={14} /></Link>

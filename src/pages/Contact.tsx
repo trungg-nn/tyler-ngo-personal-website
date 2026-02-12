@@ -5,7 +5,7 @@ export default function Contact() {
   return (
     <Layout>
       <section className="border-b border-border/50 bg-background py-16 md:py-20">
-        <div className="mx-auto w-full max-w-5xl px-6">
+        <div className="mx-auto w-full max-w-6xl px-6">
           <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Contact</p>
           <h1 className="text-5xl font-semibold md:text-[52px]">Let’s connect</h1>
           <p className="mt-3 max-w-2xl text-base text-muted-foreground">

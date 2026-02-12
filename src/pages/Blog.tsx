@@ -55,7 +55,7 @@ export default function Blog() {
   return (
     <Layout>
       <section className="border-b border-border/50 bg-background py-16 md:py-20">
-        <div className="mx-auto w-full max-w-5xl px-6">
+        <div className="mx-auto w-full max-w-6xl px-6">
           <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Blog</p>
           <h1 className="text-5xl font-semibold leading-tight md:text-[50px]">Insights & ideas</h1>
           <p className="mt-4 text-base text-muted-foreground">

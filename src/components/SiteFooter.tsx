@@ -4,7 +4,7 @@ import { Mail, MapPin } from "lucide-react";
 export default function SiteFooter() {
   return (
     <footer className="border-t border-border/60 bg-card/25 py-12 md:py-14">
-      <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 md:grid-cols-3 md:gap-16">
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 md:grid-cols-3 md:gap-16">
         <div>
           <h3 className="text-2xl font-semibold">Tyler<span className="text-[#d4b377]">.</span>Ngo</h3>
           <p className="mt-3 max-w-[280px] text-sm leading-7 text-muted-foreground">
@@ -34,7 +34,7 @@ export default function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="mx-auto mt-8 w-full max-w-6xl border-t border-border/70 px-6 pt-6 text-center text-xs text-muted-foreground">
+      <div className="mx-auto mt-8 w-full max-w-7xl border-t border-border/70 px-6 pt-6 text-center text-xs text-muted-foreground">
         © 2026 Tyler Ngo. All rights reserved.
       </div>
     </footer>

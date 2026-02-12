@@ -73,7 +73,7 @@ export default function About() {
           </div>
 
           <div className="mt-12 text-center">
-            <Link to="/contact" className="inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-3 text-sm font-medium text-primary-foreground">
+            <Link to="/contact" className="cta-btn inline-flex items-center gap-2 rounded-xl px-8 py-3 text-sm font-medium">
               Let’s work together <ArrowRight size={15} />
             </Link>
           </div>

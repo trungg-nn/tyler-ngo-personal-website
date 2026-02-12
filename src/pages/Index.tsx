@@ -33,7 +33,7 @@ export default function Index() {
             <h1 className="text-4xl font-bold leading-[1.08] md:text-[72px]">Driving growth through <span className="text-gradient-gold">data, media & experimentation</span></h1>
             <p className="mt-7 max-w-2xl text-base text-muted-foreground md:text-[19px] md:leading-[1.65]">I help ambitious brands scale revenue with full-funnel performance strategies, rigorous attribution, and relentless optimisation.</p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link to="/portfolio" className="inline-flex items-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-base font-medium text-primary-foreground">View My Work <ArrowRight size={16} /></Link>
+              <Link to="/portfolio" className="cta-btn inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-base font-medium">View My Work <ArrowRight size={16} /></Link>
               <Link to="/contact" className="rounded-xl border border-border bg-background/30 px-7 py-3.5 text-base">Get in Touch</Link>
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function Index() {
           <p className="mt-3 text-sm text-muted-foreground">Monthly insights on performance marketing, attribution, and growth strategy.</p>
           <div className="mx-auto mt-6 flex max-w-[340px] flex-col gap-2 sm:max-w-xl sm:flex-row">
             <input type="email" placeholder="your@email.com" className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-sm outline-none" />
-            <button className="rounded-xl bg-primary px-5 py-2 text-sm font-medium text-primary-foreground">Subscribe</button>
+            <button className="cta-btn rounded-xl px-5 py-2 text-sm font-medium">Subscribe</button>
           </div>
         </div>
       </section>

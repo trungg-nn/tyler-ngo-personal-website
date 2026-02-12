@@ -52,7 +52,7 @@ export default function Contact() {
                   <label className="mb-2 block text-sm text-foreground">Message</label>
                   <textarea className="min-h-[120px] w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none" placeholder="Tell me about your project..." />
                 </div>
-                <button type="button" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground">
+                <button type="button" className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-medium">
                   Send Message <Send size={14} />
                 </button>
               </div>

@@ -59,7 +59,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             >
               {isDark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <Link to="/contact" className="rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground">
+            <Link to="/contact" className="cta-btn rounded-xl px-5 py-2.5 text-sm font-medium">
               Get in Touch
             </Link>
           </div>

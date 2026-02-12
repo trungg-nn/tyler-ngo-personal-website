@@ -54,18 +54,18 @@ const posts = [
 export default function Blog() {
   return (
     <Layout>
-      <section className="border-b border-border/50 bg-background py-16 md:py-20">
-        <div className="mx-auto w-full max-w-6xl px-6">
+      <section className="border-b border-border/50 bg-background py-16 md:py-22">
+        <div className="mx-auto w-full max-w-6xl px-6 md:px-8">
           <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">Blog</p>
-          <h1 className="text-5xl font-semibold leading-tight md:text-[50px]">Insights & ideas</h1>
-          <p className="mt-4 text-base text-muted-foreground">
+          <h1 className="text-4xl font-semibold leading-tight transition-colors duration-300 hover:text-primary md:text-[46px]">Insights & ideas</h1>
+          <p className="mt-5 text-base text-muted-foreground">
             Thinking on performance marketing, growth strategy, and the future of digital.
           </p>
 
-          <div className="mt-12">
+          <div className="mt-14 space-y-1">
             {posts.map((post) => (
-              <article key={post.title} className="border-b border-border/70 py-7">
-                <div className="mb-3 flex items-center justify-between gap-4">
+              <article key={post.title} className="border-b border-border/70 py-8 md:py-9">
+                <div className="mb-4 flex items-center justify-between gap-4">
                   <div className="inline-flex items-center gap-3">
                     <span className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">
                       {post.tag}
@@ -75,8 +75,8 @@ export default function Blog() {
                   <span className="text-xs text-muted-foreground">{post.date}</span>
                 </div>
 
-                <h2 className="text-xl font-semibold leading-tight md:text-[30px]">{post.title}</h2>
-                <p className="mt-2 text-sm text-muted-foreground">{post.excerpt}</p>
+                <h2 className="text-xl font-semibold leading-tight transition-colors duration-300 hover:text-primary md:text-[28px]">{post.title}</h2>
+                <p className="mt-3 text-sm text-muted-foreground md:max-w-[82%]">{post.excerpt}</p>
               </article>
             ))}
           </div>

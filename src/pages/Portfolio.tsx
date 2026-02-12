@@ -42,23 +42,23 @@ export default function Portfolio() {
             Case studies showcasing measurable business outcomes through performance marketing strategy.
           </p>
 
-          <div className="mt-12 space-y-5">
+          <div className="mt-10 space-y-4">
             {projects.map((p) => (
-              <article key={p.title} className="rounded-2xl border border-border bg-card/55 p-7 md:p-8">
-                <div className="grid gap-7 md:grid-cols-[1.75fr_0.85fr] md:items-start">
+              <article key={p.title} className="rounded-2xl border border-border bg-card/55 p-6 md:p-6">
+                <div className="grid gap-6 md:grid-cols-[1.9fr_0.8fr] md:items-start">
                   <div>
                     <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{p.type}</p>
-                    <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-[40px]">{p.title}</h2>
-                    <p className="mt-3 max-w-[95%] text-sm text-muted-foreground md:text-base">{p.desc}</p>
-                    <div className="mt-5 flex flex-wrap gap-2">
+                    <h2 className="mt-2 text-3xl font-semibold leading-tight md:text-[30px]">{p.title}</h2>
+                    <p className="mt-3 max-w-[92%] text-sm text-muted-foreground">{p.desc}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
                       {p.tags.map((tag) => (
-                        <span key={tag} className="rounded-full bg-secondary px-3 py-1 text-sm text-secondary-foreground">
+                        <span key={tag} className="rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">
                           {tag}
                         </span>
                       ))}
                     </div>
                   </div>
-                  <div className="text-right text-2xl font-semibold md:pt-4 md:text-[28px] md:leading-snug">
+                  <div className="text-right text-xl font-semibold md:pt-3 md:text-[24px] md:leading-tight">
                     <span className="text-gradient-gold">{p.metric}</span>
                   </div>
                 </div>

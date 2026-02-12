@@ -3,23 +3,36 @@ import { useEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import SiteFooter from "@/components/SiteFooter";
 
+type Lang = "en" | "vi";
+
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/portfolio", label: "Portfolio" },
-  { to: "/blog", label: "Blog" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
+  { to: "/", label: { en: "Home", vi: "Trang chủ" } },
+  { to: "/portfolio", label: { en: "Portfolio", vi: "Dự án" } },
+  { to: "/blog", label: { en: "Blog", vi: "Bài viết" } },
+  { to: "/about", label: { en: "About", vi: "Giới thiệu" } },
+  { to: "/contact", label: { en: "Contact", vi: "Liên hệ" } },
 ];
+
+const copy = {
+  en: { cta: "Get in Touch" },
+  vi: { cta: "Liên hệ" },
+};
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const [isDark, setIsDark] = useState(true);
+  const [lang, setLang] = useState<Lang>("en");
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    const shouldDark = saved ? saved === "dark" : true;
+    const savedTheme = localStorage.getItem("theme");
+    const shouldDark = savedTheme ? savedTheme === "dark" : true;
     document.documentElement.classList.toggle("dark", shouldDark);
     setIsDark(shouldDark);
+
+    const savedLang = localStorage.getItem("lang") as Lang | null;
+    const nextLang: Lang = savedLang === "vi" ? "vi" : "en";
+    setLang(nextLang);
+    document.documentElement.lang = nextLang;
   }, []);
 
   const toggleTheme = () => {
@@ -27,6 +40,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     setIsDark(next);
     document.documentElement.classList.toggle("dark", next);
     localStorage.setItem("theme", next ? "dark" : "light");
+  };
+
+  const setLanguage = (nextLang: Lang) => {
+    setLang(nextLang);
+    localStorage.setItem("lang", nextLang);
+    document.documentElement.lang = nextLang;
   };
 
   return (
@@ -44,12 +63,29 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 to={l.to}
                 className={location.pathname === l.to ? "text-primary" : "text-muted-foreground hover:text-foreground"}
               >
-                {l.label}
+                {l.label[lang]}
               </Link>
             ))}
           </div>
 
           <div className="flex items-center gap-3">
+            <div className="hidden items-center rounded-xl border border-border/70 bg-background/55 p-1 md:flex">
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={`rounded-lg px-2.5 py-1 text-xs font-medium transition ${lang === "en" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                onClick={() => setLanguage("vi")}
+                className={`rounded-lg px-2.5 py-1 text-xs font-medium transition ${lang === "vi" ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground"}`}
+              >
+                VI
+              </button>
+            </div>
+
             <button
               type="button"
               onClick={toggleTheme}
@@ -60,7 +96,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {isDark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <Link to="/contact" className="cta-btn rounded-xl px-5 py-2.5 text-sm font-medium">
-              Get in Touch
+              {copy[lang].cta}
             </Link>
           </div>
         </nav>

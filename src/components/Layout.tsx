@@ -112,50 +112,52 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </nav>
 
-            {mobileOpen && (
-              <div className="fixed inset-0 z-[120] bg-background md:hidden">
-                <div className="mx-auto w-full max-w-7xl px-6 pt-8">
-                  <div className="mb-8 flex items-center justify-between">
-                    <span className="font-display text-2xl font-semibold tracking-tight">Tyler<span className="text-[#d4b377]">.</span>Ngo</span>
-                    <button
-                      type="button"
-                      onClick={() => setMobileOpen(false)}
-                      className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-background/55 text-muted-foreground"
-                      aria-label="Close menu"
-                    >
-                      <X size={20} />
-                    </button>
-                  </div>
-
-                  <div className="grid gap-3">
-                    {links.map((l) => (
-                      <Link
-                        key={l.to}
-                        to={l.to}
-                        className={`text-4xl font-medium leading-tight transition-colors ${location.pathname === l.to ? "text-primary" : "text-foreground/90 hover:text-foreground"}`}
-                      >
-                        {l.label}
-                      </Link>
-                    ))}
-                    <div className="mt-6 flex items-center gap-3">
-                      <button
-                        type="button"
-                        onClick={toggleTheme}
-                        className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border/70 bg-background/55 text-muted-foreground"
-                        aria-label="Toggle theme"
-                      >
-                        {isDark ? <Sun size={18} /> : <Moon size={18} />}
-                      </button>
-                      <Link to="/contact" className="cta-btn inline-flex items-center rounded-xl px-5 py-2.5 text-sm font-medium">
-                        Get in Touch
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         </header>
+
+        {mobileOpen && (
+          <div className="fixed inset-0 z-[200] bg-background md:hidden">
+            <div className="mx-auto w-full max-w-7xl px-6 pt-8">
+              <div className="mb-8 flex items-center justify-between">
+                <span className="font-display text-2xl font-semibold tracking-tight">Tyler<span className="text-[#d4b377]">.</span>Ngo</span>
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(false)}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-background text-muted-foreground"
+                  aria-label="Close menu"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="grid gap-3">
+                {links.map((l) => (
+                  <Link
+                    key={l.to}
+                    to={l.to}
+                    className={`text-4xl font-medium leading-tight transition-colors ${location.pathname === l.to ? "text-primary" : "text-foreground/90 hover:text-foreground"}`}
+                  >
+                    {l.label}
+                  </Link>
+                ))}
+                <div className="mt-6 flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={toggleTheme}
+                    className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border/70 bg-background text-muted-foreground"
+                    aria-label="Toggle theme"
+                  >
+                    {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                  </button>
+                  <Link to="/contact" className="cta-btn inline-flex items-center rounded-xl px-5 py-2.5 text-sm font-medium">
+                    Get in Touch
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <main key={location.pathname} className="page-enter">{children}</main>
         <SiteFooter />
       </div>

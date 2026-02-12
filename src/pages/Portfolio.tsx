@@ -45,7 +45,7 @@ export default function Portfolio() {
           <div className="mt-12 space-y-5">
             {projects.map((p) => (
               <article key={p.title} className="rounded-2xl border border-border bg-card/55 p-7 md:p-8">
-                <div className="grid gap-7 md:grid-cols-[1.55fr_1fr] md:items-start">
+                <div className="grid gap-7 md:grid-cols-[1.75fr_0.85fr] md:items-start">
                   <div>
                     <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{p.type}</p>
                     <h2 className="mt-3 text-3xl font-semibold leading-tight md:text-[40px]">{p.title}</h2>
@@ -58,7 +58,9 @@ export default function Portfolio() {
                       ))}
                     </div>
                   </div>
-                  <div className="text-right text-3xl font-semibold md:pt-5 md:text-[36px] md:leading-tight md:whitespace-nowrap"><span className="text-gradient-gold">{p.metric}</span></div>
+                  <div className="text-right text-2xl font-semibold md:pt-4 md:text-[28px] md:leading-snug">
+                    <span className="text-gradient-gold">{p.metric}</span>
+                  </div>
                 </div>
               </article>
             ))}

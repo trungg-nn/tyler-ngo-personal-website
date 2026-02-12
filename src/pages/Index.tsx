@@ -82,13 +82,13 @@ export default function Index() {
         </div>
       </section>
 
-      <section className="border-b border-border/50 bg-card/30 py-16">
+      <section className="border-b border-border/50 bg-card/30 py-12">
         <div className="mx-auto w-full max-w-3xl px-6 text-center">
-          <h2 className="text-[44px] font-semibold">Stay in the loop</h2>
-          <p className="mt-4 text-base text-muted-foreground">Monthly insights on performance marketing, attribution, and growth strategy.</p>
-          <div className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row">
-            <input type="email" placeholder="your@email.com" className="flex-1 rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none" />
-            <button className="rounded-xl bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground">Subscribe</button>
+          <h2 className="text-[40px] font-semibold">Stay in the loop</h2>
+          <p className="mt-3 text-sm text-muted-foreground">Monthly insights on performance marketing, attribution, and growth strategy.</p>
+          <div className="mx-auto mt-6 flex max-w-[340px] flex-col gap-2 sm:max-w-xl sm:flex-row">
+            <input type="email" placeholder="your@email.com" className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-sm outline-none" />
+            <button className="rounded-xl bg-primary px-5 py-2 text-sm font-medium text-primary-foreground">Subscribe</button>
           </div>
         </div>
       </section>

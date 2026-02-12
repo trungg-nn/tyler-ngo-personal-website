@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import Layout, { useLanguage } from "@/components/Layout";
 import MetricCard from "@/components/MetricCard";
@@ -34,6 +34,9 @@ export default function About() {
       p3: "Previously, I’ve worked with scale-ups and enterprises across SaaS, FinTech, e-commerce, and EdTech, helping teams build measurement frameworks, optimise media mix, and unlock compounding gains through structured experimentation.",
       core: "Core strengths",
       edu: "Education",
+      cvTitle: "Curriculum Vitae",
+      cvDesc: "Download my CV below to review my full experience.",
+      cvBtn: "Download CV",
       cta: "Let’s work together",
     },
     vi: {
@@ -43,6 +46,9 @@ export default function About() {
       p3: "Trước đây, mình làm việc với các scale-up và doanh nghiệp trong SaaS, FinTech, e-commerce và EdTech, hỗ trợ xây dựng hệ thống đo lường, tối ưu media mix và mở khóa tăng trưởng bền vững qua thử nghiệm có cấu trúc.",
       core: "Năng lực cốt lõi",
       edu: "Học vấn",
+      cvTitle: "Hồ sơ năng lực",
+      cvDesc: "Tải CV bên dưới để xem đầy đủ kinh nghiệm của mình.",
+      cvBtn: "Tải CV",
       cta: "Hợp tác cùng tôi",
     },
   }[lang];
@@ -85,6 +91,18 @@ export default function About() {
                 <p className="mt-1 text-sm text-muted-foreground">University of Economics, Vietnam</p>
               </article>
             </div>
+          </div>
+
+          <div className="mt-14 rounded-2xl border border-border bg-card/45 px-6 py-10 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">{t.cvTitle}</p>
+            <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground">{t.cvDesc}</p>
+            <a
+              href="/Tyler-Ngo-CV.pdf"
+              download
+              className="mt-6 inline-flex items-center gap-2 rounded-xl border border-border px-6 py-2.5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/50"
+            >
+              {t.cvBtn} <Download size={14} />
+            </a>
           </div>
 
           <div className="mt-12 text-center">

@@ -1,6 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="14" fill="#0B0D17"/>
-  <text x="14" y="41" fill="#F5F5F7" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">T</text>
-  <circle cx="37" cy="34" r="3.2" fill="#D4B377"/>
-  <text x="41" y="41" fill="#F5F5F7" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">N</text>
+  <defs>
+    <linearGradient id="bg" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0F1328"/>
+      <stop offset="1" stop-color="#080B18"/>
+    </linearGradient>
+    <linearGradient id="stroke" x1="14" y1="16" x2="50" y2="50" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F1DCB0"/>
+      <stop offset="1" stop-color="#CDA869"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#bg)"/>
+  <rect x="4.75" y="4.75" width="54.5" height="54.5" rx="15.25" stroke="rgba(255,255,255,0.12)"/>
+
+  <path d="M18 20H46" stroke="url(#stroke)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M24 20V44" stroke="url(#stroke)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M40 20V44" stroke="url(#stroke)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M24 32L40 44" stroke="url(#stroke)" stroke-width="4" stroke-linecap="round"/>
 </svg>

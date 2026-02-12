@@ -3,8 +3,8 @@ import { Mail, MapPin } from "lucide-react";
 
 export default function SiteFooter() {
   return (
-    <footer className="border-t border-border/60 bg-card/25 py-10">
-      <div className="mx-auto grid w-full max-w-6xl gap-6 px-6 md:grid-cols-3">
+    <footer className="border-t border-border/60 bg-card/25 py-10 md:py-12">
+      <div className="mx-auto grid w-full max-w-6xl gap-8 px-6 md:grid-cols-3 md:gap-12">
         <div>
           <h3 className="text-2xl font-semibold">Tyler.Ngo</h3>
           <p className="mt-3 text-sm text-muted-foreground">
@@ -21,10 +21,16 @@ export default function SiteFooter() {
           </div>
         </div>
         <div>
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.12em] text-muted-foreground">Contact</p>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p className="inline-flex items-center gap-2"><Mail size={16} /> trungngo.2810@gmail.com</p>
-            <p className="inline-flex items-center gap-2"><MapPin size={16} /> London, UK</p>
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">Contact</p>
+          <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2 leading-none">
+              <Mail size={14} />
+              <span>trungngo.2810@gmail.com</span>
+            </div>
+            <div className="flex items-center gap-2 leading-none">
+              <MapPin size={14} />
+              <span>London, UK</span>
+            </div>
           </div>
         </div>
       </div>

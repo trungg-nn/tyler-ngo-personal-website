@@ -95,6 +95,16 @@
 @layer utilities {
   .hero-bg {
     background:
+      linear-gradient(118deg, transparent 52%, rgba(134, 146, 185, 0.08) 53%, transparent 54%),
+      linear-gradient(126deg, transparent 60%, rgba(134, 146, 185, 0.06) 61%, transparent 62%),
+      radial-gradient(circle at 82% 72%, rgba(150, 160, 190, 0.2), transparent 25%),
+      radial-gradient(circle at 74% 38%, rgba(180, 186, 205, 0.12), transparent 36%),
+      radial-gradient(circle at 20% 86%, rgba(201, 169, 110, 0.08), transparent 40%),
+      linear-gradient(180deg, #f0efec 0%, #e8e6e2 100%);
+  }
+
+  .dark .hero-bg {
+    background:
       linear-gradient(118deg, transparent 52%, rgba(120, 132, 255, 0.08) 53%, transparent 54%),
       linear-gradient(126deg, transparent 60%, rgba(120, 132, 255, 0.06) 61%, transparent 62%),
       radial-gradient(circle at 80% 76%, rgba(55, 99, 255, 0.3), transparent 22%),

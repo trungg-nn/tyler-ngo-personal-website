@@ -1,20 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
   <defs>
-    <linearGradient id="bg" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#0F1328"/>
-      <stop offset="1" stop-color="#080B18"/>
+    <linearGradient id="bg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#121831"/>
+      <stop offset="1" stop-color="#090D1E"/>
     </linearGradient>
-    <linearGradient id="stroke" x1="14" y1="16" x2="50" y2="50" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#F1DCB0"/>
+    <linearGradient id="gold" x1="18" y1="18" x2="46" y2="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F2DEB6"/>
       <stop offset="1" stop-color="#CDA869"/>
     </linearGradient>
   </defs>
 
-  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#bg)"/>
-  <rect x="4.75" y="4.75" width="54.5" height="54.5" rx="15.25" stroke="rgba(255,255,255,0.12)"/>
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#bg)"/>
+  <rect x="4.75" y="4.75" width="54.5" height="54.5" rx="13.25" stroke="rgba(255,255,255,0.10)"/>
 
-  <path d="M18 20H46" stroke="url(#stroke)" stroke-width="4" stroke-linecap="round"/>
-  <path d="M24 20V44" stroke="url(#stroke)" stroke-width="4" stroke-linecap="round"/>
-  <path d="M40 20V44" stroke="url(#stroke)" stroke-width="4" stroke-linecap="round"/>
-  <path d="M24 32L40 44" stroke="url(#stroke)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M17 20.5H47" stroke="url(#gold)" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M23 20.5V43.5" stroke="url(#gold)" stroke-width="3.5" stroke-linecap="round"/>
+
+  <path d="M41 20.5V43.5" stroke="url(#gold)" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M23 30.5L40.5 43.5" stroke="url(#gold)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

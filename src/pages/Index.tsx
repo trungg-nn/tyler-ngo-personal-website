@@ -35,9 +35,8 @@ const capabilities = {
 };
 
 const heroSlides = [
-  "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
+  "/images/tyler-portrait-hero.jpg",
+  "/images/tyler-work-hero.jpg",
 ];
 
 const featuredArticles = {

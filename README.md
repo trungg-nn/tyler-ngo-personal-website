@@ -4,21 +4,6 @@
 
 **URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
-## Newsletter → Zapier webhook setup
-
-To send newsletter form submissions to Zapier/Capsule, set:
-
-```bash
-VITE_ZAPIER_WEBHOOK_URL="https://hooks.zapier.com/..."
-```
-
-Then redeploy. The home newsletter form sends a POST payload with:
-- `email`
-- `source` (`tylerngo.co.uk-home-newsletter`)
-- `tag` (`insight-hub`)
-- `submittedAt`
-- `page`
-
 ## How can I edit this code?
 
 There are several ways of editing your application.

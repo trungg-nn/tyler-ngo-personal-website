@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp, Target, BarChart3, Zap } from "lucide-react";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Layout, { useLanguage } from "@/components/Layout";
 import MetricCard from "@/components/MetricCard";
 
@@ -53,9 +53,14 @@ const featuredArticles = {
   ],
 };
 
+const ZAPIER_WEBHOOK_URL = import.meta.env.VITE_ZAPIER_WEBHOOK_URL || "";
+
 export default function Index() {
   const { lang } = useLanguage();
   const [slideIndex, setSlideIndex] = useState(0);
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [subscribeMessage, setSubscribeMessage] = useState("");
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -63,6 +68,39 @@ export default function Index() {
     }, 3200);
     return () => clearInterval(timer);
   }, []);
+
+  const handleSubscribe = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubscribeMessage("");
+
+    if (!ZAPIER_WEBHOOK_URL) {
+      setSubscribeMessage("Webhook is not configured yet.");
+      return;
+    }
+
+    try {
+      setSubmitting(true);
+      const response = await fetch(ZAPIER_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          source: "tylerngo.co.uk-home-newsletter",
+          tag: "insight-hub",
+          submittedAt: new Date().toISOString(),
+          page: window.location.href,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Subscription failed");
+      setSubscribeMessage("Subscribed successfully.");
+      setEmail("");
+    } catch {
+      setSubscribeMessage("Could not subscribe right now. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const t = {
     en: {
@@ -179,10 +217,20 @@ export default function Index() {
         <div className="mx-auto w-full max-w-3xl px-6 text-center">
           <h2 className="text-[40px] font-semibold">{t.stayLoop}</h2>
           <p className="mt-3 text-sm text-muted-foreground">{t.monthlyInsights}</p>
-          <div className="mx-auto mt-6 flex max-w-[340px] flex-col gap-2 sm:max-w-xl sm:flex-row">
-            <input type="email" placeholder="your@email.com" className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-sm outline-none" />
-            <button className="cta-btn rounded-xl px-5 py-2 text-sm font-medium">{t.subscribe}</button>
-          </div>
+          <form onSubmit={handleSubscribe} className="mx-auto mt-6 flex max-w-[340px] flex-col gap-2 sm:max-w-xl sm:flex-row">
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="your@email.com"
+              className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-sm outline-none"
+            />
+            <button disabled={submitting} className="cta-btn rounded-xl px-5 py-2 text-sm font-medium disabled:opacity-70">
+              {submitting ? "Submitting..." : t.subscribe}
+            </button>
+          </form>
+          {subscribeMessage && <p className="mt-3 text-xs text-muted-foreground">{subscribeMessage}</p>}
         </div>
       </section>
     </Layout>

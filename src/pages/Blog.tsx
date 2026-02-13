@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import Layout, { useLanguage } from "@/components/Layout";
 import { getPosts, type SanityPost } from "@/lib/sanityQueries";
 
@@ -32,9 +33,10 @@ export default function Blog() {
 
   const sanityMapped = useMemo(
     () => sanityPosts.map((post) => ({
-      tag: "Insight",
+      tag: post.categories?.[0] || "Insight",
       read: "5 min read",
       title: post.title,
+      slug: post.slug,
       excerpt: post.excerpt || post.metaDescription || "New article available.",
       date: post.publishedAt
         ? new Date(post.publishedAt).toLocaleDateString("en-GB", {
@@ -43,6 +45,7 @@ export default function Blog() {
             year: "numeric",
           })
         : "",
+      authorName: post.authorName,
     })),
     [sanityPosts]
   );
@@ -81,8 +84,19 @@ export default function Blog() {
                   <span className="text-xs text-muted-foreground">{post.date}</span>
                 </div>
 
-                <h2 className="text-xl font-semibold leading-tight transition-colors duration-300 hover:text-primary md:text-[28px]">{post.title}</h2>
+                <h2 className="text-xl font-semibold leading-tight transition-colors duration-300 hover:text-primary md:text-[28px]">
+                  {"slug" in post && post.slug ? (
+                    <Link to={`/blog/${post.slug}`} className="smooth-link">
+                      {post.title}
+                    </Link>
+                  ) : (
+                    post.title
+                  )}
+                </h2>
                 <p className="mt-3 text-sm text-muted-foreground md:max-w-[82%]">{post.excerpt}</p>
+                {"authorName" in post && post.authorName && (
+                  <p className="mt-2 text-xs text-muted-foreground">By {post.authorName}</p>
+                )}
               </article>
             ))}
           </div>

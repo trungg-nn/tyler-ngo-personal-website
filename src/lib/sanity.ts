@@ -7,7 +7,7 @@ export const sanity = createClient({
   projectId,
   dataset,
   apiVersion: import.meta.env.VITE_SANITY_API_VERSION || "2026-02-13",
-  useCdn: true,
+  useCdn: false,
 });
 
 export const hasSanityConfig = Boolean(projectId && dataset);

@@ -1,8 +1,30 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { PortableText } from "@portabletext/react";
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import Layout from "@/components/Layout";
 import { getPostBySlug, type SanityPost } from "@/lib/sanityQueries";
+
+const portableTextComponents: PortableTextComponents = {
+  block: {
+    normal: ({ children }) => <p className="mb-5 text-[17px] leading-8 text-foreground/90">{children}</p>,
+    h2: ({ children }) => <h2 className="mt-10 mb-4 text-3xl font-semibold leading-tight text-foreground">{children}</h2>,
+    h3: ({ children }) => <h3 className="mt-8 mb-3 text-2xl font-semibold leading-tight text-foreground">{children}</h3>,
+    blockquote: ({ children }) => (
+      <blockquote className="my-6 border-l-2 border-primary/60 pl-4 italic text-foreground/80">{children}</blockquote>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => <ul className="mb-6 ml-6 list-disc space-y-2 text-[17px] leading-8">{children}</ul>,
+    number: ({ children }) => <ol className="mb-6 ml-6 list-decimal space-y-2 text-[17px] leading-8">{children}</ol>,
+  },
+  marks: {
+    link: ({ children, value }) => (
+      <a href={value?.href} target="_blank" rel="noreferrer" className="text-primary underline underline-offset-2">
+        {children}
+      </a>
+    ),
+  },
+};
 
 export default function BlogPost() {
   const { slug = "" } = useParams();
@@ -68,7 +90,7 @@ export default function BlogPost() {
   return (
     <Layout>
       <section className="border-b border-border/50 bg-background py-16 md:py-20">
-        <div className="mx-auto w-full max-w-4xl px-6 md:px-8">
+        <div className="mx-auto w-full max-w-3xl px-6 md:px-8">
           <Link to="/blog" className="text-xs uppercase tracking-[0.2em] text-primary hover:underline">
             Blog
           </Link>
@@ -89,6 +111,8 @@ export default function BlogPost() {
             {post.categories?.length ? <span>• {post.categories.join(", ")}</span> : null}
           </div>
 
+          {post.excerpt && <p className="mt-6 text-xl leading-relaxed text-foreground/80">{post.excerpt}</p>}
+
           {post.imageUrl && (
             <img
               src={post.imageUrl}
@@ -97,11 +121,11 @@ export default function BlogPost() {
             />
           )}
 
-          <article className="prose prose-invert mt-10 max-w-none dark:prose-invert prose-p:text-foreground/90 prose-headings:text-foreground">
+          <article className="mt-10">
             {Array.isArray(post.body) && post.body.length > 0 ? (
-              <PortableText value={post.body} />
+              <PortableText value={post.body} components={portableTextComponents} />
             ) : (
-              <p>{post.excerpt || metaDescription}</p>
+              <p className="text-[17px] leading-8 text-foreground/90">{post.excerpt || metaDescription}</p>
             )}
           </article>
         </div>

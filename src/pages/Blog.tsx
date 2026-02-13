@@ -1,4 +1,6 @@
+import { useEffect, useMemo, useState } from "react";
 import Layout, { useLanguage } from "@/components/Layout";
+import { getPosts, type SanityPost } from "@/lib/sanityQueries";
 
 const posts = {
   en: [
@@ -15,6 +17,38 @@ const posts = {
 
 export default function Blog() {
   const { lang } = useLanguage();
+  const [sanityPosts, setSanityPosts] = useState<SanityPost[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    getPosts().then((data) => {
+      if (mounted) setSanityPosts(data);
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const sanityMapped = useMemo(
+    () => sanityPosts.map((post) => ({
+      tag: "Insight",
+      read: "5 min read",
+      title: post.title,
+      excerpt: post.excerpt || post.metaDescription || "New article available.",
+      date: post.publishedAt
+        ? new Date(post.publishedAt).toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+          })
+        : "",
+    })),
+    [sanityPosts]
+  );
+
+  const activePosts = lang === "en" && sanityMapped.length > 0 ? sanityMapped : posts[lang];
+
   const t = {
     en: {
       label: "Blog",
@@ -37,7 +71,7 @@ export default function Blog() {
           <p className="mt-4 max-w-2xl text-base text-muted-foreground md:text-[17px]">{t.subtitle}</p>
 
           <div className="mt-12 space-y-0">
-            {posts[lang].map((post) => (
+            {activePosts.map((post) => (
               <article key={post.title} className="border-b border-border/70 py-8 transition-colors duration-300 hover:bg-card/20">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <div className="inline-flex items-center gap-3">

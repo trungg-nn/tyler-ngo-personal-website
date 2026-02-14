@@ -1,6 +1,13 @@
 export type CookieConsent = "accepted" | "rejected" | null;
 
-const CONSENT_KEY = "cookieConsent";
+type ConsentRecord = {
+  status: Exclude<CookieConsent, null>;
+  updatedAt: number;
+};
+
+const CONSENT_KEY = "cookieConsent.v2";
+const LEGACY_KEY = "cookieConsent";
+const CONSENT_TTL_DAYS = 180;
 const GA_ID = "G-9M0217S7L9";
 
 declare global {
@@ -11,11 +18,50 @@ declare global {
   }
 }
 
-export const getCookieConsent = (): CookieConsent => {
-  if (typeof window === "undefined") return null;
-  const value = localStorage.getItem(CONSENT_KEY);
-  return value === "accepted" || value === "rejected" ? value : null;
+const now = () => Date.now();
+
+const isExpired = (updatedAt: number) => {
+  const ttl = CONSENT_TTL_DAYS * 24 * 60 * 60 * 1000;
+  return now() - updatedAt > ttl;
 };
+
+const readConsentRecord = (): ConsentRecord | null => {
+  if (typeof window === "undefined") return null;
+
+  const raw = localStorage.getItem(CONSENT_KEY);
+  if (raw) {
+    try {
+      const parsed = JSON.parse(raw) as ConsentRecord;
+      if ((parsed.status === "accepted" || parsed.status === "rejected") && typeof parsed.updatedAt === "number") {
+        if (isExpired(parsed.updatedAt)) {
+          localStorage.removeItem(CONSENT_KEY);
+          return null;
+        }
+        return parsed;
+      }
+    } catch {
+      localStorage.removeItem(CONSENT_KEY);
+    }
+  }
+
+  const legacy = localStorage.getItem(LEGACY_KEY);
+  if (legacy === "accepted" || legacy === "rejected") {
+    const migrated: ConsentRecord = { status: legacy, updatedAt: now() };
+    localStorage.setItem(CONSENT_KEY, JSON.stringify(migrated));
+    localStorage.removeItem(LEGACY_KEY);
+    return migrated;
+  }
+
+  return null;
+};
+
+const writeConsentRecord = (status: Exclude<CookieConsent, null>) => {
+  if (typeof window === "undefined") return;
+  const record: ConsentRecord = { status, updatedAt: now() };
+  localStorage.setItem(CONSENT_KEY, JSON.stringify(record));
+};
+
+export const getCookieConsent = (): CookieConsent => readConsentRecord()?.status ?? null;
 
 export const hasAnalyticsConsent = (): boolean => getCookieConsent() === "accepted";
 
@@ -40,11 +86,10 @@ const loadGaScript = () => {
 export const applyCookieConsent = (value: Exclude<CookieConsent, null>) => {
   if (typeof window === "undefined") return;
 
-  localStorage.setItem(CONSENT_KEY, value);
+  writeConsentRecord(value);
   ensureGtag();
 
-  const granted = value === "accepted";
-  if (granted) {
+  if (value === "accepted") {
     loadGaScript();
     window.gtag?.("js", new Date());
     window.gtag?.("consent", "update", {
@@ -74,7 +119,11 @@ export const initCookieConsent = () => {
     ad_personalization: "denied",
   });
 
-  if (getCookieConsent() === "accepted") {
+  const consent = getCookieConsent();
+  if (consent === "accepted") {
     applyCookieConsent("accepted");
+  }
+  if (consent === "rejected") {
+    applyCookieConsent("rejected");
   }
 };

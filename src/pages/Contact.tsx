@@ -108,7 +108,7 @@ export default function Contact() {
               <article className="interactive-card rounded-2xl border border-border bg-card/55 p-5">
                 <h2 className="text-xl font-semibold">{t.direct}</h2>
                 <div className="mt-4 flex flex-col gap-3 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2 leading-none"><Mail size={14} className="shrink-0" /><span>trungngo.2810@gmail.com</span></div>
+                  <div className="flex items-center gap-2 leading-none"><Mail size={14} className="shrink-0" /><span>hello@tylerngo.co.uk</span></div>
                   <div className="flex items-center gap-2 leading-none"><Phone size={14} className="shrink-0" /><span>+44 7763 464 335</span></div>
                   <div className="flex items-center gap-2 leading-none"><MapPin size={14} className="shrink-0" /><span>London, United Kingdom</span></div>
                 </div>

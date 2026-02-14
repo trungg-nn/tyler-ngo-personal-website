@@ -10,16 +10,28 @@ export default function PrivacyPolicy() {
 
           <div className="mt-8 space-y-6 text-sm leading-7 text-muted-foreground">
             <p>
-              We collect contact details you submit via forms (name, email, message) to respond to enquiries and provide requested services.
+              This policy explains how Tyler Ngo ("we", "us") collects and uses personal data when you use this website.
             </p>
             <p>
-              We use analytics tools (e.g., Google Analytics) to understand site performance and improve user experience. Data is processed in aggregated form where possible.
+              <strong className="text-foreground">Data we collect:</strong> details you submit through forms (such as name, email, message), plus technical/usage data (for example IP address, browser type, and page interactions) via analytics tools.
             </p>
             <p>
-              We do not sell personal data. Information may be processed by trusted service providers used for hosting, analytics, and form delivery.
+              <strong className="text-foreground">Why we process data:</strong> to respond to enquiries, provide requested services, improve site performance, prevent abuse/spam, and maintain website security.
             </p>
             <p>
-              To request data access, correction, or deletion, contact: <a className="text-foreground underline" href="mailto:hello@tylerngo.co.uk">hello@tylerngo.co.uk</a>.
+              <strong className="text-foreground">Legal bases (UK GDPR):</strong> legitimate interests (site operations, analytics, security), pre-contract/contract steps (responding to service requests), and consent where required.
+            </p>
+            <p>
+              <strong className="text-foreground">Sharing:</strong> we may use trusted processors for hosting, analytics, and form handling. We do not sell your personal data.
+            </p>
+            <p>
+              <strong className="text-foreground">Retention:</strong> personal data is kept only as long as reasonably necessary for the purposes above, legal obligations, or dispute handling.
+            </p>
+            <p>
+              <strong className="text-foreground">Your rights:</strong> depending on applicable law, you may request access, correction, deletion, restriction, objection, or data portability.
+            </p>
+            <p>
+              To exercise data rights, contact <a className="text-foreground underline" href="mailto:hello@tylerngo.co.uk">hello@tylerngo.co.uk</a>.
             </p>
           </div>
         </div>

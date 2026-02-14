@@ -10,16 +10,22 @@ export default function CookiesPolicy() {
 
           <div className="mt-8 space-y-6 text-sm leading-7 text-muted-foreground">
             <p>
-              This website uses essential cookies and analytics cookies to operate reliably and measure performance.
+              This website uses cookies and similar technologies to ensure core functionality, measure performance, and improve user experience.
             </p>
             <p>
-              Analytics cookies help us understand which pages perform best and where users drop off, so we can improve the website.
+              <strong className="text-foreground">Essential cookies:</strong> required for basic site operation and security.
             </p>
             <p>
-              You can control cookies via your browser settings, including blocking or deleting existing cookies.
+              <strong className="text-foreground">Analytics cookies:</strong> help us understand traffic, page performance, and engagement trends (for example via Google Analytics).
             </p>
             <p>
-              Continued use of this site indicates consent to the use of cookies as described here.
+              You can manage or disable cookies in your browser settings. Blocking some cookies may affect site functionality.
+            </p>
+            <p>
+              Where required by law, non-essential cookies are used based on consent.
+            </p>
+            <p>
+              For privacy-related questions, contact <a className="text-foreground underline" href="mailto:hello@tylerngo.co.uk">hello@tylerngo.co.uk</a>.
             </p>
           </div>
         </div>

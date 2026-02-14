@@ -10,16 +10,25 @@ export default function TermsAndConditions() {
 
           <div className="mt-8 space-y-6 text-sm leading-7 text-muted-foreground">
             <p>
-              The content on this website is provided for general information purposes and does not constitute legal, financial, or investment advice.
+              By accessing this website, you agree to these Terms & Conditions.
             </p>
             <p>
-              You are responsible for evaluating information before acting on it. Where relevant, seek independent professional advice.
+              Content is provided for general information only and does not constitute legal, tax, investment, or financial advice. You should seek independent professional advice before making decisions.
             </p>
             <p>
-              This site may include external links and partner links. We are not responsible for third-party content, products, or services.
+              We make reasonable efforts to keep information accurate and up to date, but do not guarantee completeness, reliability, or suitability for any specific purpose.
             </p>
             <p>
-              By using this website, you agree to these terms. For questions, contact <a className="text-foreground underline" href="mailto:hello@tylerngo.co.uk">hello@tylerngo.co.uk</a>.
+              This website may include third-party links and partner links. We are not responsible for third-party content, availability, products, or services.
+            </p>
+            <p>
+              All intellectual property on this website, unless stated otherwise, belongs to Tyler Ngo. You may not reproduce or republish material without permission.
+            </p>
+            <p>
+              We may update these terms from time to time by posting a revised version on this page.
+            </p>
+            <p>
+              For enquiries, contact <a className="text-foreground underline" href="mailto:hello@tylerngo.co.uk">hello@tylerngo.co.uk</a>.
             </p>
           </div>
         </div>

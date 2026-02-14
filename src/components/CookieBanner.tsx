@@ -5,6 +5,7 @@ import { applyCookieConsent, getCookieConsent, initCookieConsent } from "@/lib/c
 export default function CookieBanner() {
   const [visible, setVisible] = useState(false);
   const [showManage, setShowManage] = useState(false);
+  const [showWhy, setShowWhy] = useState(false);
   const [analyticsEnabled, setAnalyticsEnabled] = useState(true);
 
   useEffect(() => {
@@ -27,8 +28,17 @@ export default function CookieBanner() {
         We use cookies to keep the site secure and improve content with privacy-safe analytics. No ad personalization.
       </p>
       <p className="mt-1 text-xs text-muted-foreground">
-        See details in our <Link to="/cookies-policy" className="text-foreground underline">Cookies Policy</Link>.
+        See details in our <Link to="/cookies-policy" className="text-foreground underline">Cookies Policy</Link>.{" "}
+        <button type="button" onClick={() => setShowWhy((v) => !v)} className="underline">
+          Why we use analytics
+        </button>
       </p>
+
+      {showWhy && (
+        <div className="mt-3 rounded-xl border border-border/70 bg-background/70 p-3 text-xs leading-5 text-muted-foreground">
+          We use analytics to understand which pages help readers most, where users drop off, and which content to improve next. We do not use ad personalization cookies, and data is used in aggregate for site improvement.
+        </div>
+      )}
 
       {!showManage ? (
         <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">

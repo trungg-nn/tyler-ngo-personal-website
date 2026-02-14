@@ -5,6 +5,7 @@ import Layout, { useLanguage } from "@/components/Layout";
 import MetricCard from "@/components/MetricCard";
 import { NEWSLETTER_FORM_ENDPOINT, hasNewsletterEndpoint } from "@/lib/formEndpoints";
 import { getHomeSettings, getPosts, type SanityPost } from "@/lib/sanityQueries";
+import { trackEvent } from "@/lib/analytics";
 
 const metrics = {
   en: [
@@ -124,6 +125,7 @@ export default function Index() {
 
     try {
       setNewsletterState("loading");
+      trackEvent("newsletter_submit_attempt", {source: "homepage"});
       const res = await fetch(NEWSLETTER_FORM_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -140,9 +142,11 @@ export default function Index() {
 
       if (!res.ok) throw new Error("Newsletter submit failed");
       setNewsletterState("success");
+      trackEvent("newsletter_submit_success", {source: "homepage"});
       setNewsletterEmail("");
     } catch {
       setNewsletterState("error");
+      trackEvent("newsletter_submit_error", {source: "homepage"});
     }
   };
 
@@ -204,8 +208,20 @@ export default function Index() {
             <h1 className="text-4xl font-bold leading-[1.08] md:text-[72px]">{t.titleBefore} <span className="text-gradient-gold">{t.titleHighlight}</span></h1>
             <p className="mt-7 max-w-2xl text-base text-muted-foreground md:text-[19px] md:leading-[1.65]">{t.subtitle}</p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link to="/portfolio" className="cta-btn inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-base font-medium">{t.viewWork} <ArrowRight size={16} /></Link>
-              <Link to="/contact" className="rounded-xl border border-border bg-background/30 px-7 py-3.5 text-base">{t.getInTouch}</Link>
+              <Link
+                to="/portfolio"
+                onClick={() => trackEvent("hero_cta_click", {cta: "view_work"})}
+                className="cta-btn inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-base font-medium"
+              >
+                {t.viewWork} <ArrowRight size={16} />
+              </Link>
+              <Link
+                to="/contact"
+                onClick={() => trackEvent("hero_cta_click", {cta: "get_in_touch"})}
+                className="rounded-xl border border-border bg-background/30 px-7 py-3.5 text-base"
+              >
+                {t.getInTouch}
+              </Link>
             </div>
           </div>
 
@@ -270,7 +286,11 @@ export default function Index() {
                   <span>{post.date}</span>
                 </div>
                 <h3 className="mt-3 text-lg font-semibold leading-tight">
-                  <Link to={`/blog/${post.slug}`} className="smooth-link hover:text-primary">
+                  <Link
+                    to={`/blog/${post.slug}`}
+                    onClick={() => trackEvent("insights_carousel_click", {slug: post.slug})}
+                    className="smooth-link hover:text-primary"
+                  >
                     {post.title}
                   </Link>
                 </h3>

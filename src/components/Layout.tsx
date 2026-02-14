@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Moon, Sun, Menu, X, Monitor } from "lucide-react";
 import SiteFooter from "@/components/SiteFooter";
+import { trackEvent } from "@/lib/analytics";
 
 export type Lang = "en" | "vi";
 
@@ -180,7 +181,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         )}
 
-        <main key={location.pathname} className="page-enter">{children}</main>
+        <main key={location.pathname} className="page-enter pb-20 md:pb-0">{children}</main>
+
+        {!mobileOpen && (
+          <div className="fixed inset-x-0 bottom-4 z-40 px-4 md:hidden">
+            <Link
+              to="/contact"
+              onClick={() => trackEvent("mobile_sticky_cta_click", {location: location.pathname})}
+              className="cta-btn flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold shadow-[0_10px_24px_rgba(0,0,0,0.22)]"
+            >
+              Book a strategy call
+            </Link>
+          </div>
+        )}
+
         <SiteFooter />
       </div>
     </LanguageContext.Provider>

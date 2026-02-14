@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import Layout, { useLanguage } from "@/components/Layout";
 import { CONTACT_FORM_ENDPOINT, hasContactEndpoint } from "@/lib/formEndpoints";
+import { trackEvent } from "@/lib/analytics";
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
@@ -11,6 +12,7 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState("");
+  const [step, setStep] = useState<1 | 2>(1);
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
 
   const t = {
@@ -27,6 +29,7 @@ export default function Contact() {
       yourName: "Your name",
       yourEmail: "your@email.com",
       yourMessage: "Tell me about your project...",
+      continue: "Continue",
       send: "Send Message",
       sending: "Sending...",
       success: "Thanks — your message has been sent.",
@@ -46,6 +49,7 @@ export default function Contact() {
       yourName: "Tên của bạn",
       yourEmail: "email@cuaban.com",
       yourMessage: "Hãy chia sẻ về dự án của bạn...",
+      continue: "Tiếp tục",
       send: "Gửi tin nhắn",
       sending: "Đang gửi...",
       success: "Đã gửi thành công. Cảm ơn bạn!",
@@ -58,6 +62,7 @@ export default function Contact() {
     e.preventDefault();
     if (!hasContactEndpoint || !CONTACT_FORM_ENDPOINT) {
       setSubmitState("error");
+      trackEvent("contact_submit_error", {reason: "missing_endpoint"});
       return;
     }
 
@@ -68,6 +73,7 @@ export default function Contact() {
 
     try {
       setSubmitState("loading");
+      trackEvent("contact_submit_attempt", {step});
       const res = await fetch(CONTACT_FORM_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -87,11 +93,14 @@ export default function Contact() {
       if (!res.ok) throw new Error("Submit failed");
 
       setSubmitState("success");
+      trackEvent("contact_submit_success", {source: "contact_page"});
       setName("");
       setEmail("");
       setMessage("");
+      setStep(1);
     } catch {
       setSubmitState("error");
+      trackEvent("contact_submit_error", {reason: "request_failed"});
     }
   };
 
@@ -143,16 +152,17 @@ export default function Contact() {
                     placeholder={t.yourEmail}
                   />
                 </div>
-                <div>
-                  <label className="mb-2 block text-sm text-foreground">{t.message}</label>
-                  <textarea
-                    required
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="min-h-[120px] w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
-                    placeholder={t.yourMessage}
-                  />
-                </div>
+                {step === 2 && (
+                  <div>
+                    <label className="mb-2 block text-sm text-foreground">{t.message}</label>
+                    <textarea
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      className="min-h-[120px] w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
+                      placeholder={t.yourMessage}
+                    />
+                  </div>
+                )}
 
                 <input
                   tabIndex={-1}
@@ -168,13 +178,27 @@ export default function Contact() {
                 {submitState === "success" && <p className="text-xs text-emerald-500">{t.success}</p>}
                 {submitState === "error" && <p className="text-xs text-red-500">{t.error}</p>}
 
-                <button
-                  type="submit"
-                  disabled={submitState === "loading"}
-                  className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {submitState === "loading" ? t.sending : t.send} <Send size={14} />
-                </button>
+                {step === 1 ? (
+                  <button
+                    type="button"
+                    disabled={!name.trim() || !email.trim()}
+                    onClick={() => {
+                      setStep(2);
+                      trackEvent("contact_step_continue", {source: "contact_page"});
+                    }}
+                    className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {t.continue} <Send size={14} />
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    disabled={submitState === "loading"}
+                    className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {submitState === "loading" ? t.sending : t.send} <Send size={14} />
+                  </button>
+                )}
               </div>
             </form>
           </div>

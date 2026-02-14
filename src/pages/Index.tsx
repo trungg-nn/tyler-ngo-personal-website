@@ -58,6 +58,7 @@ export default function Index() {
   const { lang } = useLanguage();
   const [slideIndex, setSlideIndex] = useState(0);
   const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterTrap, setNewsletterTrap] = useState("");
   const [newsletterState, setNewsletterState] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   useEffect(() => {
@@ -74,13 +75,22 @@ export default function Index() {
       return;
     }
 
+    if (newsletterTrap.trim()) {
+      setNewsletterState("success");
+      return;
+    }
+
     try {
       setNewsletterState("loading");
       const res = await fetch(NEWSLETTER_FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           email: newsletterEmail,
+          _subject: "Newsletter subscription",
+          _template: "table",
+          _captcha: "false",
+          _honey: newsletterTrap,
           source: "tylerngo.co.uk/newsletter",
           submittedAt: new Date().toISOString(),
         }),
@@ -225,6 +235,15 @@ export default function Index() {
               onChange={(e) => setNewsletterEmail(e.target.value)}
               placeholder="your@email.com"
               className="flex-1 rounded-xl border border-border bg-background px-4 py-2 text-sm outline-none"
+            />
+            <input
+              tabIndex={-1}
+              autoComplete="off"
+              value={newsletterTrap}
+              onChange={(e) => setNewsletterTrap(e.target.value)}
+              className="hidden"
+              aria-hidden="true"
+              name="website"
             />
             <button
               type="submit"

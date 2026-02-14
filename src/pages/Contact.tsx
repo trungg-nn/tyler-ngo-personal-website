@@ -10,6 +10,7 @@ export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState("");
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
 
   const t = {
@@ -60,15 +61,24 @@ export default function Contact() {
       return;
     }
 
+    if (website.trim()) {
+      setSubmitState("success");
+      return;
+    }
+
     try {
       setSubmitState("loading");
       const res = await fetch(CONTACT_FORM_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           name,
           email,
           message,
+          _subject: `Website Contact Form: ${name}`,
+          _template: "table",
+          _captcha: "false",
+          _honey: website,
           source: "tylerngo.co.uk/contact",
           submittedAt: new Date().toISOString(),
         }),
@@ -143,6 +153,16 @@ export default function Contact() {
                     placeholder={t.yourMessage}
                   />
                 </div>
+
+                <input
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  className="hidden"
+                  aria-hidden="true"
+                  name="website"
+                />
 
                 {!hasContactEndpoint && <p className="text-xs text-amber-500">{t.missingEndpoint}</p>}
                 {submitState === "success" && <p className="text-xs text-emerald-500">{t.success}</p>}

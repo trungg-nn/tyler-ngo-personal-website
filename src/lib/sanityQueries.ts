@@ -70,7 +70,13 @@ export async function getPostBySlug(slug: string): Promise<SanityPost | null> {
         "imageAlt": image.alt,
         "authorName": author->name,
         "categories": categories[]->title,
-        body
+        body[]{
+          ...,
+          _type == "image" => {
+            ...,
+            "asset": asset->{url}
+          }
+        }
       }`,
       { slug }
     );

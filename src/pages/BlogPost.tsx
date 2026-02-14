@@ -1,7 +1,9 @@
-import {useEffect, useMemo, useState} from 'react'
+import {useEffect, useMemo, useState, type FormEvent} from 'react'
 import {Link, useParams} from 'react-router-dom'
 import {PortableText, type PortableTextComponents} from '@portabletext/react'
 import Layout from '@/components/Layout'
+import {NEWSLETTER_FORM_ENDPOINT, hasNewsletterEndpoint} from '@/lib/formEndpoints'
+import {trackEvent} from '@/lib/analytics'
 import {getPostBySlug, getPosts, type SanityPost} from '@/lib/sanityQueries'
 
 type TocItem = {
@@ -64,6 +66,8 @@ export default function BlogPost() {
   const [loading, setLoading] = useState(true)
   const [activeHeadingId, setActiveHeadingId] = useState('')
   const [scrollProgress, setScrollProgress] = useState(0)
+  const [newsletterEmail, setNewsletterEmail] = useState('')
+  const [newsletterState, setNewsletterState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
   useEffect(() => {
     let mounted = true
@@ -226,6 +230,38 @@ export default function BlogPost() {
     window.addEventListener('scroll', onScroll, {passive: true})
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const onNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (!hasNewsletterEndpoint || !NEWSLETTER_FORM_ENDPOINT) {
+      setNewsletterState('error')
+      return
+    }
+
+    try {
+      setNewsletterState('loading')
+      trackEvent('newsletter_submit_attempt', {source: 'blog_post', slug: post?.slug})
+      const res = await fetch(NEWSLETTER_FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          email: newsletterEmail,
+          _subject: 'Website Newsletter Signup',
+          _template: 'table',
+          source: `tylerngo.co.uk/blog/${post?.slug || ''}`,
+          submittedAt: new Date().toISOString(),
+        }),
+      })
+
+      if (!res.ok) throw new Error('Newsletter submit failed')
+      setNewsletterState('success')
+      trackEvent('newsletter_submit_success', {source: 'blog_post', slug: post?.slug})
+      setNewsletterEmail('')
+    } catch {
+      setNewsletterState('error')
+      trackEvent('newsletter_submit_error', {source: 'blog_post', slug: post?.slug})
+    }
+  }
 
   const portableTextComponents: PortableTextComponents = {
     block: {
@@ -451,6 +487,34 @@ export default function BlogPost() {
               <article className="mt-10 max-w-3xl">
                 {Array.isArray(post.body) && post.body.length > 0 ? <PortableText value={post.body} components={portableTextComponents} /> : <p className="text-[17px] leading-8 text-foreground/90">{post.excerpt || metaDescription}</p>}
               </article>
+
+              <section className="mt-10 max-w-3xl rounded-2xl border border-border/70 bg-card/45 p-5 md:p-6">
+                <p className="text-[11px] uppercase tracking-[0.2em] text-primary">Mailing list</p>
+                <h3 className="mt-2 text-2xl font-semibold">Get practical growth updates in your inbox</h3>
+                <p className="mt-2 text-sm text-muted-foreground">No spam. Actionable marketing insights, case breakdowns, and frameworks you can apply immediately.</p>
+
+                <form onSubmit={onNewsletterSubmit} className="mt-4 flex flex-col gap-3 sm:flex-row">
+                  <input
+                    type="email"
+                    required
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
+                    placeholder="Email address"
+                  />
+                  <button
+                    type="submit"
+                    disabled={newsletterState === 'loading'}
+                    className="cta-btn inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {newsletterState === 'loading' ? 'Subscribing…' : 'Subscribe'}
+                  </button>
+                </form>
+
+                {newsletterState === 'success' && <p className="mt-3 text-xs text-emerald-500">Subscribed successfully. Welcome aboard.</p>}
+                {newsletterState === 'error' && <p className="mt-3 text-xs text-red-500">Couldn’t subscribe right now. Please try again.</p>}
+                <p className="mt-3 text-[11px] text-muted-foreground">By submitting your information, you agree to the <Link to="/privacy-policy" className="underline">Privacy Policy</Link>.</p>
+              </section>
 
               {relatedPosts.length > 0 && (
                 <section className="mt-14 max-w-4xl border-t border-border/60 pt-8">

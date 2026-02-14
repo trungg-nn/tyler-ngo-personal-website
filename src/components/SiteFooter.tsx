@@ -53,10 +53,10 @@ export default function SiteFooter() {
         <div>
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-foreground">{t.contact}</p>
           <div className="flex flex-col gap-3 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2 leading-none">
+            <a href="mailto:hello@tylerngo.co.uk" className="flex items-center gap-2 leading-none transition-colors hover:text-foreground">
               <Mail size={14} />
-              <span>trungngo.2810@gmail.com</span>
-            </div>
+              <span>hello@tylerngo.co.uk</span>
+            </a>
             <a href="#" className="flex items-center gap-2 leading-none transition-colors hover:text-foreground">
               <Linkedin size={14} />
               <span>{t.linkedin}</span>

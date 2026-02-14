@@ -172,6 +172,9 @@ export default function Index() {
               <img
                 src={heroSlides[slideIndex]}
                 alt="Performance marketing"
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
                 className="h-[520px] w-full rounded-[20px] object-cover transition-all duration-700"
               />
             </div>

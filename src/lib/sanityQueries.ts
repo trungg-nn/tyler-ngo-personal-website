@@ -6,8 +6,14 @@ export type SanityPost = {
   slug: string;
   excerpt?: string;
   metaDescription?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  canonicalUrl?: string;
+  noIndex?: boolean;
+  focusKeyword?: string;
   publishedAt?: string;
   imageUrl?: string;
+  imageAlt?: string;
   authorName?: string;
   categories?: string[];
   body?: unknown[];
@@ -24,8 +30,14 @@ export async function getPosts(): Promise<SanityPost[]> {
         "slug": slug.current,
         excerpt,
         metaDescription,
+        ogTitle,
+        ogDescription,
+        canonicalUrl,
+        noIndex,
+        focusKeyword,
         publishedAt,
         "imageUrl": image.asset->url,
+        "imageAlt": image.alt,
         "authorName": author->name,
         "categories": categories[]->title
       }`
@@ -48,8 +60,14 @@ export async function getPostBySlug(slug: string): Promise<SanityPost | null> {
         "slug": slug.current,
         excerpt,
         metaDescription,
+        ogTitle,
+        ogDescription,
+        canonicalUrl,
+        noIndex,
+        focusKeyword,
         publishedAt,
         "imageUrl": image.asset->url,
+        "imageAlt": image.alt,
         "authorName": author->name,
         "categories": categories[]->title,
         body

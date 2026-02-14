@@ -16,12 +16,54 @@ const getBlockText = (value: any) =>
     .join('')
     .trim()
 
+const upsertMeta = (name: string, content: string) => {
+  let el = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null
+  if (!el) {
+    el = document.createElement('meta')
+    el.setAttribute('name', name)
+    document.head.appendChild(el)
+  }
+  el.setAttribute('content', content)
+}
+
+const upsertPropertyMeta = (property: string, content: string) => {
+  let el = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement | null
+  if (!el) {
+    el = document.createElement('meta')
+    el.setAttribute('property', property)
+    document.head.appendChild(el)
+  }
+  el.setAttribute('content', content)
+}
+
+const upsertCanonical = (href: string) => {
+  let el = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null
+  if (!el) {
+    el = document.createElement('link')
+    el.setAttribute('rel', 'canonical')
+    document.head.appendChild(el)
+  }
+  el.setAttribute('href', href)
+}
+
+const upsertJsonLd = (id: string, payload: Record<string, unknown>) => {
+  let el = document.getElementById(id) as HTMLScriptElement | null
+  if (!el) {
+    el = document.createElement('script')
+    el.type = 'application/ld+json'
+    el.id = id
+    document.head.appendChild(el)
+  }
+  el.text = JSON.stringify(payload)
+}
+
 export default function BlogPost() {
   const {slug = ''} = useParams()
   const [post, setPost] = useState<SanityPost | null>(null)
   const [allPosts, setAllPosts] = useState<SanityPost[]>([])
   const [loading, setLoading] = useState(true)
   const [activeHeadingId, setActiveHeadingId] = useState('')
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   useEffect(() => {
     let mounted = true
@@ -64,6 +106,15 @@ export default function BlogPost() {
       .slice(0, 5)
   }, [post])
 
+  const faqItems = useMemo(() => {
+    if (!Array.isArray(post?.body)) return []
+
+    return post.body
+      .filter((block: any) => block?._type === 'faqBlock')
+      .flatMap((block: any) => (block?.items || []).map((item: any) => ({question: item?.question, answer: item?.answer})))
+      .filter((item: any) => item.question && item.answer)
+  }, [post])
+
   const relatedPosts = useMemo(() => {
     if (!post) return []
     const categorySet = new Set(post.categories || [])
@@ -82,20 +133,56 @@ export default function BlogPost() {
   useEffect(() => {
     if (!post) return
 
-    document.title = `${post.title} | Tyler Ngo`
+    const siteUrl = 'https://www.tylerngo.co.uk'
+    const canonical = post.canonicalUrl || `${siteUrl}/blog/${post.slug}`
+    const title = post.ogTitle || post.title
+    const description = post.ogDescription || metaDescription
 
-    const metaTag = document.querySelector('meta[name="description"]')
-    if (metaTag) metaTag.setAttribute('content', metaDescription)
-  }, [post, metaDescription])
+    document.title = `${post.title} | Tyler Ngo`
+    upsertMeta('description', metaDescription)
+    upsertMeta('robots', post.noIndex ? 'noindex,nofollow' : 'index,follow')
+    upsertCanonical(canonical)
+    upsertPropertyMeta('og:type', 'article')
+    upsertPropertyMeta('og:title', title)
+    upsertPropertyMeta('og:description', description)
+    upsertPropertyMeta('og:url', canonical)
+    if (post.imageUrl) upsertPropertyMeta('og:image', post.imageUrl)
+
+    const articleJsonLd: Record<string, unknown> = {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: post.title,
+      description,
+      datePublished: post.publishedAt,
+      dateModified: post.publishedAt,
+      author: post.authorName ? {'@type': 'Person', name: post.authorName} : undefined,
+      image: post.imageUrl || undefined,
+      mainEntityOfPage: canonical,
+    }
+
+    upsertJsonLd('jsonld-article', articleJsonLd)
+
+    if (faqItems.length > 0) {
+      upsertJsonLd('jsonld-faq', {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.answer,
+          },
+        })),
+      })
+    }
+  }, [post, metaDescription, faqItems])
 
   useEffect(() => {
     if (!toc.length) return
     setActiveHeadingId((prev) => prev || toc[0].id)
 
-    const headings = toc
-      .map((item) => document.getElementById(item.id))
-      .filter((el): el is HTMLElement => Boolean(el))
-
+    const headings = toc.map((item) => document.getElementById(item.id)).filter((el): el is HTMLElement => Boolean(el))
     if (!headings.length) return
 
     const observer = new IntersectionObserver(
@@ -104,37 +191,47 @@ export default function BlogPost() {
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
 
-        if (visible[0]?.target?.id) {
-          setActiveHeadingId(visible[0].target.id)
-        }
+        if (visible[0]?.target?.id) setActiveHeadingId(visible[0].target.id)
       },
-      {
-        rootMargin: '-25% 0px -60% 0px',
-        threshold: [0, 0.25, 0.5, 1],
-      }
+      {rootMargin: '-25% 0px -60% 0px', threshold: [0, 0.25, 0.5, 1]}
     )
 
     headings.forEach((heading) => observer.observe(heading))
-
     return () => observer.disconnect()
   }, [toc])
+
+  useEffect(() => {
+    const onScroll = () => {
+      const total = document.documentElement.scrollHeight - window.innerHeight
+      const progress = total > 0 ? (window.scrollY / total) * 100 : 0
+      setScrollProgress(Math.min(100, Math.max(0, progress)))
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, {passive: true})
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const portableTextComponents: PortableTextComponents = {
     block: {
       normal: ({children}) => <p className="mb-5 text-[17px] leading-8 text-foreground/90">{children}</p>,
       h2: ({children, value}: any) => (
-        <h2 id={value?._key} className="mt-12 mb-4 scroll-mt-28 text-3xl font-semibold leading-tight text-foreground">
+        <h2 id={value?._key} className="group mt-12 mb-4 scroll-mt-28 text-3xl font-semibold leading-tight text-foreground">
           {children}
+          <a href={`#${value?._key}`} className="ml-2 text-primary/70 opacity-0 transition group-hover:opacity-100" aria-label="Copy section link">
+            #
+          </a>
         </h2>
       ),
       h3: ({children, value}: any) => (
-        <h3 id={value?._key} className="mt-8 mb-3 scroll-mt-28 text-2xl font-semibold leading-tight text-foreground">
+        <h3 id={value?._key} className="group mt-8 mb-3 scroll-mt-28 text-2xl font-semibold leading-tight text-foreground">
           {children}
+          <a href={`#${value?._key}`} className="ml-2 text-primary/70 opacity-0 transition group-hover:opacity-100" aria-label="Copy section link">
+            #
+          </a>
         </h3>
       ),
-      blockquote: ({children}) => (
-        <blockquote className="my-6 border-l-2 border-primary/60 pl-4 italic text-foreground/80">{children}</blockquote>
-      ),
+      blockquote: ({children}) => <blockquote className="my-6 border-l-2 border-primary/60 pl-4 italic text-foreground/80">{children}</blockquote>,
     },
     list: {
       bullet: ({children}) => <ul className="mb-6 ml-6 list-disc space-y-2 text-[17px] leading-8">{children}</ul>,
@@ -150,12 +247,7 @@ export default function BlogPost() {
     types: {
       image: ({value}: any) => (
         <figure className="my-8">
-          <img
-            src={value?.asset?.url}
-            alt={value?.alt || 'Blog image'}
-            className="w-full rounded-2xl border border-border/60 object-cover"
-            loading="lazy"
-          />
+          <img src={value?.asset?.url} alt={value?.alt || 'Blog image'} className="w-full rounded-2xl border border-border/60 object-cover" loading="lazy" />
           {value?.caption && <figcaption className="mt-2 text-sm text-muted-foreground">{value.caption}</figcaption>}
         </figure>
       ),
@@ -171,19 +263,14 @@ export default function BlogPost() {
             <span>Code</span>
             <span className="uppercase tracking-wide">{value?.language || 'text'}</span>
           </div>
-          <pre className="overflow-x-auto p-4 text-sm leading-6 text-slate-100">
-            <code>{value?.code}</code>
-          </pre>
+          <pre className="overflow-x-auto p-4 text-sm leading-6 text-slate-100"><code>{value?.code}</code></pre>
         </div>
       ),
       embed: ({value}: any) => {
         const url = value?.url as string
         if (!url) return null
-
         const isYouTube = /youtube\.com|youtu\.be/.test(url)
-        const src = isYouTube
-          ? url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')
-          : url
+        const src = isYouTube ? url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/') : url
 
         return (
           <figure className="my-8">
@@ -202,6 +289,53 @@ export default function BlogPost() {
           </figure>
         )
       },
+      faqBlock: ({value}: any) => (
+        <section className="my-10 rounded-xl border border-border/60 bg-card/35 p-5">
+          <h3 className="text-xl font-semibold">{value?.title || 'Frequently asked questions'}</h3>
+          <div className="mt-4 space-y-3">
+            {(value?.items || []).map((item: any, idx: number) => (
+              <details key={`${item?.question}-${idx}`} className="rounded-lg border border-border/60 bg-background/60 p-3">
+                <summary className="cursor-pointer font-medium">{item?.question}</summary>
+                <p className="mt-2 text-sm text-muted-foreground">{item?.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      ),
+      comparisonTable: ({value}: any) => (
+        <section className="my-10 overflow-hidden rounded-xl border border-border/60">
+          {value?.title && <h3 className="border-b border-border/60 bg-card/40 px-4 py-3 text-lg font-semibold">{value.title}</h3>}
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-card/30">
+                <tr>
+                  {(value?.headers || []).map((head: string, idx: number) => (
+                    <th key={`${head}-${idx}`} className="border-b border-border/60 px-4 py-3 font-semibold">{head}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {(value?.rows || []).map((row: any, rowIdx: number) => (
+                  <tr key={`row-${rowIdx}`} className="odd:bg-background even:bg-card/20">
+                    {(row?.cells || []).map((cell: string, cellIdx: number) => (
+                      <td key={`${rowIdx}-${cellIdx}`} className="border-b border-border/40 px-4 py-3 text-muted-foreground">{cell}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ),
+      ctaBlock: ({value}: any) => (
+        <section className="my-10 rounded-2xl border border-primary/35 bg-primary/10 p-6">
+          <h3 className="text-2xl font-semibold">{value?.title}</h3>
+          <p className="mt-2 text-foreground/85">{value?.description}</p>
+          <a href={value?.buttonUrl} className="cta-btn mt-4 inline-flex rounded-xl px-4 py-2 text-sm font-medium">
+            {value?.buttonLabel || 'Learn more'}
+          </a>
+        </section>
+      ),
     },
   }
 
@@ -221,9 +355,7 @@ export default function BlogPost() {
         <section className="border-b border-border/50 bg-background py-16 md:py-20">
           <div className="mx-auto w-full max-w-6xl px-6 md:px-8">
             <p className="text-sm text-muted-foreground">Article not found.</p>
-            <Link to="/blog" className="mt-4 inline-block text-sm text-primary hover:underline">
-              ← Back to blog
-            </Link>
+            <Link to="/blog" className="mt-4 inline-block text-sm text-primary hover:underline">← Back to blog</Link>
           </div>
         </section>
       </Layout>
@@ -232,6 +364,10 @@ export default function BlogPost() {
 
   return (
     <Layout>
+      <div className="fixed left-0 right-0 top-0 z-[60] h-1 bg-transparent">
+        <div className="h-full bg-primary transition-all duration-150" style={{width: `${scrollProgress}%`}} />
+      </div>
+
       <section className="border-b border-border/50 bg-background py-14 md:py-20">
         <div className="mx-auto w-full max-w-6xl px-6 md:px-8">
           <div className="grid gap-10 lg:grid-cols-12">
@@ -244,12 +380,7 @@ export default function BlogPost() {
                   ) : (
                     toc.map((item) => (
                       <li key={item.id} className={item.level === 'h3' ? 'ml-3' : ''}>
-                        <a
-                          className={`smooth-link ${
-                            activeHeadingId === item.id ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-                          }`}
-                          href={`#${item.id}`}
-                        >
+                        <a className={`smooth-link ${activeHeadingId === item.id ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`} href={`#${item.id}`}>
                           {item.text}
                         </a>
                       </li>
@@ -260,22 +391,11 @@ export default function BlogPost() {
             </aside>
 
             <main className="lg:col-span-9">
-              <Link to="/blog" className="text-xs uppercase tracking-[0.2em] text-primary hover:underline">
-                Blog
-              </Link>
-
+              <Link to="/blog" className="text-xs uppercase tracking-[0.2em] text-primary hover:underline">Blog</Link>
               <h1 className="mt-5 max-w-4xl text-4xl font-bold leading-tight md:text-5xl">{post.title}</h1>
 
               <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
-                {post.publishedAt && (
-                  <span>
-                    {new Date(post.publishedAt).toLocaleDateString('en-GB', {
-                      day: 'numeric',
-                      month: 'short',
-                      year: 'numeric',
-                    })}
-                  </span>
-                )}
+                {post.publishedAt && <span>{new Date(post.publishedAt).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'})}</span>}
                 {post.authorName && <span>• By {post.authorName}</span>}
                 {post.categories?.length ? <span>• {post.categories.join(', ')}</span> : null}
                 <span>• 5 min read</span>
@@ -289,12 +409,7 @@ export default function BlogPost() {
                   ) : (
                     toc.map((item) => (
                       <li key={item.id} className={item.level === 'h3' ? 'ml-3' : ''}>
-                        <a
-                          className={`smooth-link ${
-                            activeHeadingId === item.id ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-                          }`}
-                          href={`#${item.id}`}
-                        >
+                        <a className={`smooth-link ${activeHeadingId === item.id ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`} href={`#${item.id}`}>
                           {item.text}
                         </a>
                       </li>
@@ -316,20 +431,10 @@ export default function BlogPost() {
                 </div>
               )}
 
-              {post.imageUrl && (
-                <img
-                  src={post.imageUrl}
-                  alt={post.title}
-                  className="mt-8 w-full max-w-4xl rounded-2xl border border-border/60 object-cover"
-                />
-              )}
+              {post.imageUrl && <img src={post.imageUrl} alt={post.imageAlt || post.title} className="mt-8 w-full max-w-4xl rounded-2xl border border-border/60 object-cover" />}
 
               <article className="mt-10 max-w-3xl">
-                {Array.isArray(post.body) && post.body.length > 0 ? (
-                  <PortableText value={post.body} components={portableTextComponents} />
-                ) : (
-                  <p className="text-[17px] leading-8 text-foreground/90">{post.excerpt || metaDescription}</p>
-                )}
+                {Array.isArray(post.body) && post.body.length > 0 ? <PortableText value={post.body} components={portableTextComponents} /> : <p className="text-[17px] leading-8 text-foreground/90">{post.excerpt || metaDescription}</p>}
               </article>
 
               {relatedPosts.length > 0 && (
@@ -337,24 +442,12 @@ export default function BlogPost() {
                   <h3 className="text-2xl font-semibold">Related posts</h3>
                   <div className="mt-5 grid gap-4 md:grid-cols-3">
                     {relatedPosts.map((item) => (
-                      <Link
-                        key={item._id}
-                        to={`/blog/${item.slug}`}
-                        className="interactive-card rounded-xl border border-border/60 bg-card/35 p-4"
-                      >
+                      <Link key={item._id} to={`/blog/${item.slug}`} className="interactive-card rounded-xl border border-border/60 bg-card/35 p-4">
                         <p className="text-xs text-muted-foreground">
-                          {item.publishedAt
-                            ? new Date(item.publishedAt).toLocaleDateString('en-GB', {
-                                day: 'numeric',
-                                month: 'short',
-                                year: 'numeric',
-                              })
-                            : 'Article'}
+                          {item.publishedAt ? new Date(item.publishedAt).toLocaleDateString('en-GB', {day: 'numeric', month: 'short', year: 'numeric'}) : 'Article'}
                         </p>
                         <h4 className="mt-2 text-base font-semibold leading-snug">{item.title}</h4>
-                        <p className="mt-2 text-sm text-muted-foreground">
-                          {item.excerpt || item.metaDescription || 'Read more'}
-                        </p>
+                        <p className="mt-2 text-sm text-muted-foreground">{item.excerpt || item.metaDescription || 'Read more'}</p>
                       </Link>
                     ))}
                   </div>

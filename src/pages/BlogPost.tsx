@@ -159,6 +159,49 @@ export default function BlogPost() {
           {value?.caption && <figcaption className="mt-2 text-sm text-muted-foreground">{value.caption}</figcaption>}
         </figure>
       ),
+      callout: ({value}: any) => (
+        <div className="my-8 rounded-xl border border-primary/25 bg-primary/10 p-5">
+          {value?.title && <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">{value.title}</p>}
+          <p className="mt-2 text-[16px] leading-7 text-foreground/90">{value?.content}</p>
+        </div>
+      ),
+      codeBlock: ({value}: any) => (
+        <div className="my-8 overflow-hidden rounded-xl border border-border/70 bg-[#0c1220]">
+          <div className="flex items-center justify-between border-b border-white/10 px-4 py-2 text-xs text-slate-300">
+            <span>Code</span>
+            <span className="uppercase tracking-wide">{value?.language || 'text'}</span>
+          </div>
+          <pre className="overflow-x-auto p-4 text-sm leading-6 text-slate-100">
+            <code>{value?.code}</code>
+          </pre>
+        </div>
+      ),
+      embed: ({value}: any) => {
+        const url = value?.url as string
+        if (!url) return null
+
+        const isYouTube = /youtube\.com|youtu\.be/.test(url)
+        const src = isYouTube
+          ? url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')
+          : url
+
+        return (
+          <figure className="my-8">
+            <div className="overflow-hidden rounded-xl border border-border/60">
+              <iframe
+                src={src}
+                title={value?.caption || 'Embedded content'}
+                className="h-[420px] w-full"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+            {value?.caption && <figcaption className="mt-2 text-sm text-muted-foreground">{value.caption}</figcaption>}
+          </figure>
+        )
+      },
     },
   }
 

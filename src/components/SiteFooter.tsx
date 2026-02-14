@@ -17,6 +17,10 @@ export default function SiteFooter() {
       linkedin: "LinkedIn",
       instagram: "Instagram",
       facebook: "Facebook",
+      legal: "LEGAL",
+      privacy: "Privacy Policy",
+      cookies: "Cookies Policy",
+      terms: "Terms & Conditions",
       rights: "© 2026 Tyler Ngo. All rights reserved.",
     },
     vi: {
@@ -30,13 +34,17 @@ export default function SiteFooter() {
       linkedin: "LinkedIn",
       instagram: "Instagram",
       facebook: "Facebook",
+      legal: "PHÁP LÝ",
+      privacy: "Chính sách quyền riêng tư",
+      cookies: "Chính sách cookie",
+      terms: "Điều khoản & Điều kiện",
       rights: "© 2026 Tyler Ngo. Đã đăng ký bản quyền.",
     },
   }[lang];
 
   return (
     <footer className="border-t border-border/80 bg-muted/45 py-12 md:py-14 dark:bg-[#10101a]">
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 md:grid-cols-3 md:gap-16">
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 md:grid-cols-4 md:gap-12">
         <div>
           <h3 className="text-2xl font-semibold">Tyler<span className="text-[#d4b377]">.</span>Ngo</h3>
           <p className="mt-3 max-w-[280px] text-sm leading-7 text-muted-foreground">{t.desc}</p>
@@ -48,6 +56,14 @@ export default function SiteFooter() {
             <Link to="/blog" className="block text-muted-foreground hover:text-foreground">{t.blog}</Link>
             <Link to="/about" className="block text-muted-foreground hover:text-foreground">{t.about}</Link>
             <Link to="/contact" className="block text-muted-foreground hover:text-foreground">{t.contactLink}</Link>
+          </div>
+        </div>
+        <div>
+          <Link to="/legal" className="mb-4 block text-xs font-bold uppercase tracking-[0.14em] text-foreground hover:text-primary">{t.legal}</Link>
+          <div className="space-y-3 text-sm">
+            <Link to="/privacy-policy" className="block text-muted-foreground hover:text-foreground">{t.privacy}</Link>
+            <Link to="/cookies-policy" className="block text-muted-foreground hover:text-foreground">{t.cookies}</Link>
+            <Link to="/terms-and-conditions" className="block text-muted-foreground hover:text-foreground">{t.terms}</Link>
           </div>
         </div>
         <div>

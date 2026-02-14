@@ -11,6 +11,8 @@ type BlogCard = {
   excerpt: string;
   date: string;
   authorName?: string;
+  imageUrl?: string;
+  imageAlt?: string;
 };
 
 const fallbackPosts = {
@@ -68,6 +70,9 @@ const fallbackPosts = {
   ],
 };
 
+const FALLBACK_THUMBNAIL =
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80";
+
 export default function Blog() {
   const { lang } = useLanguage();
   const [sanityPosts, setSanityPosts] = useState<SanityPost[]>([]);
@@ -99,6 +104,8 @@ export default function Blog() {
             })
           : "",
         authorName: post.authorName,
+        imageUrl: post.imageUrl,
+        imageAlt: post.imageAlt,
       })),
     [sanityPosts]
   );
@@ -169,7 +176,14 @@ export default function Blog() {
                 <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] text-secondary-foreground">{featured.tag}</span>
               </div>
 
-              <h2 className="mt-4 text-3xl font-semibold leading-tight md:text-[42px]">
+              <img
+                src={featured.imageUrl || FALLBACK_THUMBNAIL}
+                alt={featured.imageAlt || featured.title}
+                loading="lazy"
+                className="mt-4 h-52 w-full rounded-xl border border-border/50 object-cover md:h-64"
+              />
+
+              <h2 className="mt-5 text-3xl font-semibold leading-tight md:text-[42px]">
                 {featured.slug ? (
                   <Link to={`/blog/${featured.slug}`} className="smooth-link hover:text-primary">
                     {featured.title}
@@ -204,6 +218,13 @@ export default function Blog() {
           <div className="mt-7 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {list.map((post) => (
               <article key={`${post.title}-${post.date}`} className="interactive-card rounded-2xl border border-border/60 bg-card/40 p-5">
+                <img
+                  src={post.imageUrl || FALLBACK_THUMBNAIL}
+                  alt={post.imageAlt || post.title}
+                  loading="lazy"
+                  className="mb-3 h-40 w-full rounded-xl border border-border/50 object-cover"
+                />
+
                 <div className="mb-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                   <span className="rounded-full bg-secondary px-2 py-1 text-secondary-foreground">{post.tag}</span>
                   <span>{post.date}</span>

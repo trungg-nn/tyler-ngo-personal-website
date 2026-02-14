@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { Moon, Sun, Menu, X, Monitor } from "lucide-react";
 import SiteFooter from "@/components/SiteFooter";
 
 export type Lang = "en" | "vi";
@@ -28,22 +28,43 @@ const links = [
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const [isDark, setIsDark] = useState(true);
+  const [themeMode, setThemeMode] = useState<"light" | "dark" | "system">("system");
   const [mobileOpen, setMobileOpen] = useState(false);
   const lang: Lang = "en";
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    const shouldDark = savedTheme ? savedTheme === "dark" : true;
-    document.documentElement.classList.toggle("dark", shouldDark);
-    setIsDark(shouldDark);
+    const applyTheme = (mode: "light" | "dark" | "system") => {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      const shouldDark = mode === "system" ? prefersDark : mode === "dark";
+      document.documentElement.classList.toggle("dark", shouldDark);
+      setIsDark(shouldDark);
+    };
+
+    const savedMode = (localStorage.getItem("themeMode") as "light" | "dark" | "system" | null) || "system";
+    setThemeMode(savedMode);
+    applyTheme(savedMode);
     document.documentElement.lang = "en";
+
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const onSystemChange = () => {
+      if (savedMode === "system" || localStorage.getItem("themeMode") === "system") {
+        applyTheme("system");
+      }
+    };
+
+    media.addEventListener("change", onSystemChange);
+    return () => media.removeEventListener("change", onSystemChange);
   }, []);
 
-  const toggleTheme = () => {
-    const next = !isDark;
-    setIsDark(next);
-    document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
+  const cycleTheme = () => {
+    const nextMode = themeMode === "light" ? "dark" : themeMode === "dark" ? "system" : "light";
+    setThemeMode(nextMode);
+    localStorage.setItem("themeMode", nextMode);
+
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const shouldDark = nextMode === "system" ? prefersDark : nextMode === "dark";
+    document.documentElement.classList.toggle("dark", shouldDark);
+    setIsDark(shouldDark);
   };
 
   useEffect(() => {
@@ -83,12 +104,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
-                    onClick={toggleTheme}
+                    onClick={cycleTheme}
                     className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border/70 bg-background/55 text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:text-foreground"
-                    aria-label="Toggle theme"
-                    title="Toggle light/dark mode"
+                    aria-label="Cycle theme mode"
+                    title={`Theme: ${themeMode} (tap to switch)`}
                   >
-                    {isDark ? <Sun size={16} /> : <Moon size={16} />}
+                    {themeMode === "system" ? <Monitor size={16} /> : isDark ? <Sun size={16} /> : <Moon size={16} />}
                   </button>
                   <Link to="/contact" className="cta-btn rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-300 hover:-translate-y-0.5">
                     Get in Touch
@@ -143,11 +164,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="mt-6 flex items-center gap-3">
                   <button
                     type="button"
-                    onClick={toggleTheme}
+                    onClick={cycleTheme}
                     className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-border/70 bg-background text-muted-foreground"
-                    aria-label="Toggle theme"
+                    aria-label="Cycle theme mode"
+                    title={`Theme: ${themeMode} (tap to switch)`}
                   >
-                    {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                    {themeMode === "system" ? <Monitor size={18} /> : isDark ? <Sun size={18} /> : <Moon size={18} />}
                   </button>
                   <Link to="/contact" className="cta-btn inline-flex items-center rounded-xl px-5 py-2.5 text-sm font-medium">
                     Get in Touch

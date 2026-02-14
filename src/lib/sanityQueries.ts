@@ -19,6 +19,12 @@ export type SanityPost = {
   body?: unknown[];
 };
 
+export type SanityHomeSettings = {
+  heroSlides?: { imageUrl?: string; alt?: string }[];
+  insightsTitle?: string;
+  insightsSubtitle?: string;
+};
+
 export async function getPosts(): Promise<SanityPost[]> {
   if (!hasSanityConfig) return [];
 
@@ -82,6 +88,27 @@ export async function getPostBySlug(slug: string): Promise<SanityPost | null> {
     );
 
     return post;
+  } catch {
+    return null;
+  }
+}
+
+export async function getHomeSettings(): Promise<SanityHomeSettings | null> {
+  if (!hasSanityConfig) return null;
+
+  try {
+    const settings = await sanity.fetch<SanityHomeSettings | null>(
+      `*[_type == "homeSettings"][0]{
+        insightsTitle,
+        insightsSubtitle,
+        heroSlides[]{
+          "imageUrl": image.asset->url,
+          alt
+        }
+      }`
+    );
+
+    return settings;
   } catch {
     return null;
   }

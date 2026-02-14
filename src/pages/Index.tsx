@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Layout, { useLanguage } from "@/components/Layout";
 import MetricCard from "@/components/MetricCard";
 import { NEWSLETTER_FORM_ENDPOINT, hasNewsletterEndpoint } from "@/lib/formEndpoints";
-import { getPosts, type SanityPost } from "@/lib/sanityQueries";
+import { getHomeSettings, getPosts, type SanityPost } from "@/lib/sanityQueries";
 
 const metrics = {
   en: [
@@ -36,10 +36,10 @@ const capabilities = {
   ],
 };
 
-const heroSlides = [
-  "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
-  "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
+const defaultHeroSlides = [
+  { imageUrl: "https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=80", alt: "Performance marketing dashboard" },
+  { imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80", alt: "Marketing analytics" },
+  { imageUrl: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80", alt: "Growth strategy planning" },
 ];
 
 const FALLBACK_THUMBNAIL =
@@ -52,6 +52,8 @@ export default function Index() {
   const [newsletterTrap, setNewsletterTrap] = useState("");
   const [newsletterState, setNewsletterState] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [latestPosts, setLatestPosts] = useState<SanityPost[]>([]);
+  const [heroSlides, setHeroSlides] = useState(defaultHeroSlides);
+  const [insightsContent, setInsightsContent] = useState<{ title?: string; subtitle?: string }>({});
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -62,9 +64,28 @@ export default function Index() {
 
   useEffect(() => {
     let mounted = true;
-    getPosts().then((data) => {
-      if (mounted) setLatestPosts(data.slice(0, 5));
+
+    Promise.all([getPosts(), getHomeSettings()]).then(([posts, settings]) => {
+      if (!mounted) return;
+
+      setLatestPosts(posts.slice(0, 5));
+
+      const sanitySlides = settings?.heroSlides?.filter((slide) => slide?.imageUrl) || [];
+      if (sanitySlides.length > 0) {
+        setHeroSlides(
+          sanitySlides.map((slide) => ({
+            imageUrl: slide.imageUrl || FALLBACK_THUMBNAIL,
+            alt: slide.alt || "Homepage hero slide",
+          }))
+        );
+      }
+
+      setInsightsContent({
+        title: settings?.insightsTitle,
+        subtitle: settings?.insightsSubtitle,
+      });
     });
+
     return () => {
       mounted = false;
     };
@@ -191,8 +212,8 @@ export default function Index() {
           <div className="relative hidden md:block">
             <div className="hero-frame overflow-hidden rounded-[26px] border border-border/70 bg-card/50 p-2 shadow-[0_20px_60px_rgba(0,0,0,0.22)]">
               <img
-                src={heroSlides[slideIndex]}
-                alt="Performance marketing"
+                src={heroSlides[slideIndex]?.imageUrl || FALLBACK_THUMBNAIL}
+                alt={heroSlides[slideIndex]?.alt || "Performance marketing"}
                 loading="lazy"
                 decoding="async"
                 fetchPriority="low"
@@ -231,10 +252,11 @@ export default function Index() {
 
       <section className="border-b border-border/50 bg-background py-16">
         <div className="mx-auto w-full max-w-7xl px-6">
-          <div className="mb-8 flex items-end justify-between">
+          <div className="mb-8 flex items-end justify-between gap-6">
             <div>
               <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">{t.insights}</p>
-              <h2 className="text-[44px] font-semibold">{t.latestThinking}</h2>
+              <h2 className="text-[44px] font-semibold">{insightsContent.title || t.latestThinking}</h2>
+              {insightsContent.subtitle && <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{insightsContent.subtitle}</p>}
             </div>
             <Link to="/blog" className="hidden items-center gap-2 text-primary md:inline-flex">{t.allArticles} <ArrowRight size={14} /></Link>
           </div>

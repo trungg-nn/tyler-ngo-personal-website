@@ -24,6 +24,19 @@ const portableTextComponents: PortableTextComponents = {
       </a>
     ),
   },
+  types: {
+    image: ({ value }) => (
+      <figure className="my-8">
+        <img
+          src={value?.asset?.url}
+          alt={value?.alt || "Blog image"}
+          className="w-full rounded-2xl border border-border/60 object-cover"
+          loading="lazy"
+        />
+        {value?.caption && <figcaption className="mt-2 text-sm text-muted-foreground">{value.caption}</figcaption>}
+      </figure>
+    ),
+  },
 };
 
 export default function BlogPost() {

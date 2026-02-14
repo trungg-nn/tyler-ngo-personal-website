@@ -21,6 +21,7 @@ export default function BlogPost() {
   const [post, setPost] = useState<SanityPost | null>(null)
   const [allPosts, setAllPosts] = useState<SanityPost[]>([])
   const [loading, setLoading] = useState(true)
+  const [activeHeadingId, setActiveHeadingId] = useState('')
 
   useEffect(() => {
     let mounted = true
@@ -86,6 +87,37 @@ export default function BlogPost() {
     const metaTag = document.querySelector('meta[name="description"]')
     if (metaTag) metaTag.setAttribute('content', metaDescription)
   }, [post, metaDescription])
+
+  useEffect(() => {
+    if (!toc.length) return
+    setActiveHeadingId((prev) => prev || toc[0].id)
+
+    const headings = toc
+      .map((item) => document.getElementById(item.id))
+      .filter((el): el is HTMLElement => Boolean(el))
+
+    if (!headings.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+
+        if (visible[0]?.target?.id) {
+          setActiveHeadingId(visible[0].target.id)
+        }
+      },
+      {
+        rootMargin: '-25% 0px -60% 0px',
+        threshold: [0, 0.25, 0.5, 1],
+      }
+    )
+
+    headings.forEach((heading) => observer.observe(heading))
+
+    return () => observer.disconnect()
+  }, [toc])
 
   const portableTextComponents: PortableTextComponents = {
     block: {
@@ -169,7 +201,12 @@ export default function BlogPost() {
                   ) : (
                     toc.map((item) => (
                       <li key={item.id} className={item.level === 'h3' ? 'ml-3' : ''}>
-                        <a className="smooth-link text-muted-foreground hover:text-foreground" href={`#${item.id}`}>
+                        <a
+                          className={`smooth-link ${
+                            activeHeadingId === item.id ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                          }`}
+                          href={`#${item.id}`}
+                        >
                           {item.text}
                         </a>
                       </li>
@@ -209,7 +246,12 @@ export default function BlogPost() {
                   ) : (
                     toc.map((item) => (
                       <li key={item.id} className={item.level === 'h3' ? 'ml-3' : ''}>
-                        <a className="smooth-link text-muted-foreground hover:text-foreground" href={`#${item.id}`}>
+                        <a
+                          className={`smooth-link ${
+                            activeHeadingId === item.id ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                          }`}
+                          href={`#${item.id}`}
+                        >
                           {item.text}
                         </a>
                       </li>

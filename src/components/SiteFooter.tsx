@@ -10,6 +10,7 @@ export default function SiteFooter() {
       desc: "Performance Marketing Manager driving full-funnel growth through data, media, and experimentation.",
       navigate: "NAVIGATE",
       contact: "CONTACT",
+      home: "Home",
       portfolio: "Portfolio",
       blog: "Blog",
       about: "About",
@@ -27,6 +28,7 @@ export default function SiteFooter() {
       desc: "Performance Marketing Manager thúc đẩy tăng trưởng full-funnel qua dữ liệu, media và thử nghiệm.",
       navigate: "ĐIỀU HƯỚNG",
       contact: "LIÊN HỆ",
+      home: "Trang chủ",
       portfolio: "Dự án",
       blog: "Bài viết",
       about: "Giới thiệu",
@@ -52,6 +54,7 @@ export default function SiteFooter() {
         <div>
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-foreground">{t.navigate}</p>
           <div className="space-y-3 text-sm">
+            <Link to="/" className="block text-muted-foreground hover:text-foreground">{t.home}</Link>
             <Link to="/portfolio" className="block text-muted-foreground hover:text-foreground">{t.portfolio}</Link>
             <Link to="/blog" className="block text-muted-foreground hover:text-foreground">{t.blog}</Link>
             <Link to="/about" className="block text-muted-foreground hover:text-foreground">{t.about}</Link>

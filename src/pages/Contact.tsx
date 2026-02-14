@@ -1,8 +1,16 @@
+import { useState, type FormEvent } from "react";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import Layout, { useLanguage } from "@/components/Layout";
+import { CONTACT_FORM_ENDPOINT, hasContactEndpoint } from "@/lib/formEndpoints";
+
+type SubmitState = "idle" | "loading" | "success" | "error";
 
 export default function Contact() {
   const { lang } = useLanguage();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [submitState, setSubmitState] = useState<SubmitState>("idle");
 
   const t = {
     en: {
@@ -19,6 +27,10 @@ export default function Contact() {
       yourEmail: "your@email.com",
       yourMessage: "Tell me about your project...",
       send: "Send Message",
+      sending: "Sending...",
+      success: "Thanks — your message has been sent.",
+      error: "Could not send right now. Please email me directly.",
+      missingEndpoint: "Form endpoint not configured yet. Please use direct email for now.",
     },
     vi: {
       label: "Liên hệ",
@@ -34,8 +46,44 @@ export default function Contact() {
       yourEmail: "email@cuaban.com",
       yourMessage: "Hãy chia sẻ về dự án của bạn...",
       send: "Gửi tin nhắn",
+      sending: "Đang gửi...",
+      success: "Đã gửi thành công. Cảm ơn bạn!",
+      error: "Gửi thất bại. Vui lòng email trực tiếp giúp mình.",
+      missingEndpoint: "Form chưa cấu hình nơi nhận. Tạm thời vui lòng email trực tiếp.",
     },
   }[lang];
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!hasContactEndpoint || !CONTACT_FORM_ENDPOINT) {
+      setSubmitState("error");
+      return;
+    }
+
+    try {
+      setSubmitState("loading");
+      const res = await fetch(CONTACT_FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          source: "tylerngo.co.uk/contact",
+          submittedAt: new Date().toISOString(),
+        }),
+      });
+
+      if (!res.ok) throw new Error("Submit failed");
+
+      setSubmitState("success");
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch {
+      setSubmitState("error");
+    }
+  };
 
   return (
     <Layout>
@@ -62,22 +110,50 @@ export default function Contact() {
               </article>
             </div>
 
-            <form className="interactive-card rounded-2xl border border-border bg-card/55 p-5">
+            <form onSubmit={onSubmit} className="interactive-card rounded-2xl border border-border bg-card/55 p-5">
               <div className="space-y-4">
                 <div>
                   <label className="mb-2 block text-sm text-foreground">{t.name}</label>
-                  <input className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none" placeholder={t.yourName} />
+                  <input
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
+                    placeholder={t.yourName}
+                  />
                 </div>
                 <div>
                   <label className="mb-2 block text-sm text-foreground">{t.email}</label>
-                  <input className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none" placeholder={t.yourEmail} />
+                  <input
+                    required
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
+                    placeholder={t.yourEmail}
+                  />
                 </div>
                 <div>
                   <label className="mb-2 block text-sm text-foreground">{t.message}</label>
-                  <textarea className="min-h-[120px] w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none" placeholder={t.yourMessage} />
+                  <textarea
+                    required
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="min-h-[120px] w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
+                    placeholder={t.yourMessage}
+                  />
                 </div>
-                <button type="button" className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-medium">
-                  {t.send} <Send size={14} />
+
+                {!hasContactEndpoint && <p className="text-xs text-amber-500">{t.missingEndpoint}</p>}
+                {submitState === "success" && <p className="text-xs text-emerald-500">{t.success}</p>}
+                {submitState === "error" && <p className="text-xs text-red-500">{t.error}</p>}
+
+                <button
+                  type="submit"
+                  disabled={submitState === "loading"}
+                  className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {submitState === "loading" ? t.sending : t.send} <Send size={14} />
                 </button>
               </div>
             </form>

@@ -76,7 +76,7 @@ export default function SiteFooter() {
               <Mail size={14} />
               <span>hello@tylerngo.co.uk</span>
             </a>
-            <a href="#" className="flex items-center gap-2 leading-none transition-colors hover:text-foreground">
+            <a href="https://www.linkedin.com/in/ngongoctrung" target="_blank" rel="noreferrer" className="flex items-center gap-2 leading-none transition-colors hover:text-foreground">
               <Linkedin size={14} />
               <span>{t.linkedin}</span>
             </a>

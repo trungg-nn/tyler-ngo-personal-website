@@ -488,32 +488,44 @@ export default function BlogPost() {
                 {Array.isArray(post.body) && post.body.length > 0 ? <PortableText value={post.body} components={portableTextComponents} /> : <p className="text-[17px] leading-8 text-foreground/90">{post.excerpt || metaDescription}</p>}
               </article>
 
-              <section className="mt-10 max-w-3xl rounded-2xl border border-border/70 bg-card/45 p-5 md:p-6">
-                <p className="text-[11px] uppercase tracking-[0.2em] text-primary">Mailing list</p>
-                <h3 className="mt-2 text-2xl font-semibold">Get practical growth updates in your inbox</h3>
-                <p className="mt-2 text-sm text-muted-foreground">No spam. Actionable marketing insights, case breakdowns, and frameworks you can apply immediately.</p>
+              <section className="mt-10 max-w-3xl rounded-2xl border border-border/70 bg-card/45 p-4 md:p-6">
+                <div className="grid gap-4 sm:grid-cols-[120px_1fr] sm:gap-5">
+                  <div className="overflow-hidden rounded-xl border border-border/60 bg-muted/40">
+                    {post.imageUrl ? (
+                      <img src={post.imageUrl} alt={post.imageAlt || post.title} className="h-full min-h-[110px] w-full object-cover" loading="lazy" />
+                    ) : (
+                      <div className="flex h-full min-h-[110px] items-center justify-center text-xs uppercase tracking-[0.18em] text-muted-foreground">Newsletter</div>
+                    )}
+                  </div>
 
-                <form onSubmit={onNewsletterSubmit} className="mt-4 flex flex-col gap-3 sm:flex-row">
-                  <input
-                    type="email"
-                    required
-                    value={newsletterEmail}
-                    onChange={(e) => setNewsletterEmail(e.target.value)}
-                    className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
-                    placeholder="Email address"
-                  />
-                  <button
-                    type="submit"
-                    disabled={newsletterState === 'loading'}
-                    className="cta-btn inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    {newsletterState === 'loading' ? 'Subscribing…' : 'Subscribe'}
-                  </button>
-                </form>
+                  <div>
+                    <p className="text-[11px] uppercase tracking-[0.2em] text-primary">Mailing list</p>
+                    <h3 className="mt-1 text-2xl font-semibold">Join my mailing list</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">Get practical growth updates, case studies, and actionable frameworks in your inbox.</p>
 
-                {newsletterState === 'success' && <p className="mt-3 text-xs text-emerald-500">Subscribed successfully. Welcome aboard.</p>}
-                {newsletterState === 'error' && <p className="mt-3 text-xs text-red-500">Couldn’t subscribe right now. Please try again.</p>}
-                <p className="mt-3 text-[11px] text-muted-foreground">By submitting your information, you agree to the <Link to="/privacy-policy" className="underline">Privacy Policy</Link>.</p>
+                    <form onSubmit={onNewsletterSubmit} className="mt-4 flex flex-col gap-3 sm:flex-row">
+                      <input
+                        type="email"
+                        required
+                        value={newsletterEmail}
+                        onChange={(e) => setNewsletterEmail(e.target.value)}
+                        className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
+                        placeholder="Email address"
+                      />
+                      <button
+                        type="submit"
+                        disabled={newsletterState === 'loading'}
+                        className="cta-btn inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
+                      >
+                        {newsletterState === 'loading' ? 'Subscribing…' : 'Sign up'}
+                      </button>
+                    </form>
+
+                    {newsletterState === 'success' && <p className="mt-3 text-xs text-emerald-500">Subscribed successfully. Welcome aboard.</p>}
+                    {newsletterState === 'error' && <p className="mt-3 text-xs text-red-500">Couldn’t subscribe right now. Please try again.</p>}
+                    <p className="mt-3 text-[11px] text-muted-foreground">By submitting your information, you agree to the <Link to="/privacy-policy" className="underline">Privacy Policy</Link>.</p>
+                  </div>
+                </div>
               </section>
 
               {relatedPosts.length > 0 && (

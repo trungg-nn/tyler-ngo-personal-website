@@ -1,4 +1,4 @@
-const DEFAULT_INBOX = "trungngo.2810@gmail.com";
+const DEFAULT_INBOX = "tylerngo198@gmail.com";
 
 const defaultContactEndpoint = `https://formsubmit.co/ajax/${DEFAULT_INBOX}`;
 const defaultNewsletterEndpoint = `https://formsubmit.co/ajax/${DEFAULT_INBOX}`;

@@ -2,7 +2,7 @@ import {useEffect, useMemo, useState} from 'react'
 import {Link, useParams} from 'react-router-dom'
 import {PortableText, type PortableTextComponents} from '@portabletext/react'
 import Layout from '@/components/Layout'
-import {getPostBySlug, type SanityPost} from '@/lib/sanityQueries'
+import {getPostBySlug, getPosts, type SanityPost} from '@/lib/sanityQueries'
 
 type TocItem = {
   id: string
@@ -19,16 +19,18 @@ const getBlockText = (value: any) =>
 export default function BlogPost() {
   const {slug = ''} = useParams()
   const [post, setPost] = useState<SanityPost | null>(null)
+  const [allPosts, setAllPosts] = useState<SanityPost[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     let mounted = true
     setLoading(true)
-    getPostBySlug(slug).then((data) => {
-      if (mounted) {
-        setPost(data)
-        setLoading(false)
-      }
+
+    Promise.all([getPostBySlug(slug), getPosts()]).then(([postData, posts]) => {
+      if (!mounted) return
+      setPost(postData)
+      setAllPosts(posts)
+      setLoading(false)
     })
 
     return () => {
@@ -50,6 +52,31 @@ export default function BlogPost() {
       }))
       .filter((item) => item.text)
   }, [post])
+
+  const takeaways = useMemo(() => {
+    if (!Array.isArray(post?.body)) return []
+
+    return post.body
+      .filter((block: any) => block?._type === 'block' && block?.listItem === 'bullet')
+      .map((block: any) => getBlockText(block))
+      .filter(Boolean)
+      .slice(0, 5)
+  }, [post])
+
+  const relatedPosts = useMemo(() => {
+    if (!post) return []
+    const categorySet = new Set(post.categories || [])
+
+    const scored = allPosts
+      .filter((item) => item.slug && item.slug !== post.slug)
+      .map((item) => {
+        const overlap = (item.categories || []).filter((category) => categorySet.has(category)).length
+        return {item, score: overlap}
+      })
+      .sort((a, b) => b.score - a.score)
+
+    return scored.slice(0, 3).map((entry) => entry.item)
+  }, [allPosts, post])
 
   useEffect(() => {
     if (!post) return
@@ -174,7 +201,35 @@ export default function BlogPost() {
                 <span>• 5 min read</span>
               </div>
 
+              <details className="mt-6 rounded-xl border border-border/60 bg-card/30 p-4 lg:hidden">
+                <summary className="cursor-pointer text-sm font-medium text-foreground">On this page</summary>
+                <ul className="mt-3 space-y-2 text-sm">
+                  {toc.length === 0 ? (
+                    <li className="text-muted-foreground">No section headings yet.</li>
+                  ) : (
+                    toc.map((item) => (
+                      <li key={item.id} className={item.level === 'h3' ? 'ml-3' : ''}>
+                        <a className="smooth-link text-muted-foreground hover:text-foreground" href={`#${item.id}`}>
+                          {item.text}
+                        </a>
+                      </li>
+                    ))
+                  )}
+                </ul>
+              </details>
+
               {post.excerpt && <p className="mt-6 max-w-3xl text-xl leading-relaxed text-foreground/80">{post.excerpt}</p>}
+
+              {takeaways.length > 0 && (
+                <div className="mt-8 max-w-3xl rounded-xl border border-border/60 bg-card/35 p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Key takeaways</p>
+                  <ul className="mt-3 ml-5 list-disc space-y-2 text-sm text-foreground/90">
+                    {takeaways.map((item, idx) => (
+                      <li key={`${item}-${idx}`}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
 
               {post.imageUrl && (
                 <img
@@ -191,6 +246,35 @@ export default function BlogPost() {
                   <p className="text-[17px] leading-8 text-foreground/90">{post.excerpt || metaDescription}</p>
                 )}
               </article>
+
+              {relatedPosts.length > 0 && (
+                <section className="mt-14 max-w-4xl border-t border-border/60 pt-8">
+                  <h3 className="text-2xl font-semibold">Related posts</h3>
+                  <div className="mt-5 grid gap-4 md:grid-cols-3">
+                    {relatedPosts.map((item) => (
+                      <Link
+                        key={item._id}
+                        to={`/blog/${item.slug}`}
+                        className="interactive-card rounded-xl border border-border/60 bg-card/35 p-4"
+                      >
+                        <p className="text-xs text-muted-foreground">
+                          {item.publishedAt
+                            ? new Date(item.publishedAt).toLocaleDateString('en-GB', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric',
+                              })
+                            : 'Article'}
+                        </p>
+                        <h4 className="mt-2 text-base font-semibold leading-snug">{item.title}</h4>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          {item.excerpt || item.metaDescription || 'Read more'}
+                        </p>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              )}
             </main>
           </div>
         </div>

@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, TrendingUp, Target, BarChart3, Zap } from "lucide-react";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Layout, { useLanguage } from "@/components/Layout";
 import MetricCard from "@/components/MetricCard";
 import { NEWSLETTER_FORM_ENDPOINT, hasNewsletterEndpoint } from "@/lib/formEndpoints";
+import { getPosts, type SanityPost } from "@/lib/sanityQueries";
 
 const metrics = {
   en: [
@@ -41,18 +42,8 @@ const heroSlides = [
   "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
 ];
 
-const featuredArticles = {
-  en: [
-    { title: "Why Multi-Touch Attribution Changes Everything", tag: "Attribution", date: "Jan 2026" },
-    { title: "Scaling Paid Media Without Scaling Waste", tag: "Performance", date: "Dec 2025" },
-    { title: "The Experimentation Playbook for B2B", tag: "Strategy", date: "Nov 2025" },
-  ],
-  vi: [
-    { title: "Vì sao Multi-Touch Attribution thay đổi cuộc chơi", tag: "Attribution", date: "Thg 1 2026" },
-    { title: "Mở rộng Paid Media mà không lãng phí ngân sách", tag: "Performance", date: "Thg 12 2025" },
-    { title: "Playbook thử nghiệm cho B2B", tag: "Chiến lược", date: "Thg 11 2025" },
-  ],
-};
+const FALLBACK_THUMBNAIL =
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80";
 
 export default function Index() {
   const { lang } = useLanguage();
@@ -60,6 +51,7 @@ export default function Index() {
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterTrap, setNewsletterTrap] = useState("");
   const [newsletterState, setNewsletterState] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [latestPosts, setLatestPosts] = useState<SanityPost[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -67,6 +59,35 @@ export default function Index() {
     }, 3200);
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    getPosts().then((data) => {
+      if (mounted) setLatestPosts(data.slice(0, 5));
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const carouselPosts = useMemo(
+    () =>
+      latestPosts.map((post) => ({
+        title: post.title,
+        slug: post.slug,
+        tag: post.categories?.[0] || "Insight",
+        date: post.publishedAt
+          ? new Date(post.publishedAt).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })
+          : "",
+        imageUrl: post.imageUrl || FALLBACK_THUMBNAIL,
+        imageAlt: post.imageAlt || post.title,
+      })),
+    [latestPosts]
+  );
 
   const onNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -118,7 +139,7 @@ export default function Index() {
       expertise: "Expertise",
       whatBest: "What I do best",
       insights: "Insights",
-      latestThinking: "Latest thinking",
+      latestThinking: "Latest insights",
       allArticles: "All articles",
       stayLoop: "Stay in the loop",
       monthlyInsights: "Monthly insights on performance marketing, attribution, and growth strategy.",
@@ -141,7 +162,7 @@ export default function Index() {
       expertise: "Chuyên môn",
       whatBest: "Điểm mạnh của tôi",
       insights: "Góc nhìn",
-      latestThinking: "Bài viết mới nhất",
+      latestThinking: "Insights mới nhất",
       allArticles: "Xem tất cả",
       stayLoop: "Luôn cập nhật",
       monthlyInsights: "Insight hàng tháng về performance marketing, attribution và chiến lược tăng trưởng.",
@@ -210,16 +231,27 @@ export default function Index() {
 
       <section className="border-b border-border/50 bg-background py-16">
         <div className="mx-auto w-full max-w-7xl px-6">
-          <div className="mb-10 flex items-end justify-between">
-            <div><p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">{t.insights}</p><h2 className="text-[44px] font-semibold">{t.latestThinking}</h2></div>
+          <div className="mb-8 flex items-end justify-between">
+            <div>
+              <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">{t.insights}</p>
+              <h2 className="text-[44px] font-semibold">{t.latestThinking}</h2>
+            </div>
             <Link to="/blog" className="hidden items-center gap-2 text-primary md:inline-flex">{t.allArticles} <ArrowRight size={14} /></Link>
           </div>
-          <div className="grid gap-5 md:grid-cols-3">
-            {featuredArticles[lang].map((a) => (
-              <article key={a.title} className="interactive-card rounded-2xl border border-border bg-card/60 p-5">
-                <span className="mb-4 inline-block rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">{a.tag}</span>
-                <h3 className="mb-3 text-xl font-semibold leading-tight">{a.title}</h3>
-                <p className="text-sm text-muted-foreground">{a.date}</p>
+
+          <div className="-mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2">
+            {carouselPosts.map((post) => (
+              <article key={post.slug} className="interactive-card min-w-[280px] max-w-[320px] snap-start rounded-2xl border border-border bg-card/60 p-4 md:min-w-[340px]">
+                <img src={post.imageUrl} alt={post.imageAlt} loading="lazy" className="h-40 w-full rounded-xl border border-border/50 object-cover" />
+                <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+                  <span className="rounded-full bg-secondary px-2 py-1 text-secondary-foreground">{post.tag}</span>
+                  <span>{post.date}</span>
+                </div>
+                <h3 className="mt-3 text-lg font-semibold leading-tight">
+                  <Link to={`/blog/${post.slug}`} className="smooth-link hover:text-primary">
+                    {post.title}
+                  </Link>
+                </h3>
               </article>
             ))}
           </div>

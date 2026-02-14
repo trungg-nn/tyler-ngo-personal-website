@@ -117,13 +117,28 @@ export default function BlogPost() {
 
   const relatedPosts = useMemo(() => {
     if (!post) return []
-    const categorySet = new Set(post.categories || [])
+
+    const tokenize = (value: string) =>
+      value
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .split(/\s+/)
+        .filter((token) => token.length > 2)
+
+    const sourceCategories = new Set(post.categories || [])
+    const sourceTokens = new Set(tokenize(`${post.title} ${post.excerpt || ''} ${post.focusKeyword || ''}`))
 
     const scored = allPosts
       .filter((item) => item.slug && item.slug !== post.slug)
       .map((item) => {
-        const overlap = (item.categories || []).filter((category) => categorySet.has(category)).length
-        return {item, score: overlap}
+        const categoryScore = (item.categories || []).filter((category) => sourceCategories.has(category)).length * 5
+        const itemTokens = new Set(tokenize(`${item.title} ${item.excerpt || ''} ${item.focusKeyword || ''}`))
+        const keywordScore = [...itemTokens].filter((token) => sourceTokens.has(token)).length
+
+        const daysOld = item.publishedAt ? (Date.now() - new Date(item.publishedAt).getTime()) / (1000 * 60 * 60 * 24) : 365
+        const recencyScore = Math.max(0, 3 - Math.min(3, daysOld / 30))
+
+        return {item, score: categoryScore + keywordScore + recencyScore}
       })
       .sort((a, b) => b.score - a.score)
 

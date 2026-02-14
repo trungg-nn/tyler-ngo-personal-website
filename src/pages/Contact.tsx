@@ -12,7 +12,6 @@ export default function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [website, setWebsite] = useState("");
-  const [step, setStep] = useState<1 | 2>(1);
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
 
   const t = {
@@ -26,10 +25,10 @@ export default function Contact() {
       name: "Name",
       email: "Email",
       message: "Message",
+      optional: "optional",
       yourName: "Your name",
       yourEmail: "your@email.com",
       yourMessage: "Tell me about your project...",
-      continue: "Continue",
       send: "Send Message",
       sending: "Sending...",
       success: "Thanks — your message has been sent.",
@@ -46,10 +45,10 @@ export default function Contact() {
       name: "Tên",
       email: "Email",
       message: "Nội dung",
+      optional: "tuỳ chọn",
       yourName: "Tên của bạn",
       yourEmail: "email@cuaban.com",
       yourMessage: "Hãy chia sẻ về dự án của bạn...",
-      continue: "Tiếp tục",
       send: "Gửi tin nhắn",
       sending: "Đang gửi...",
       success: "Đã gửi thành công. Cảm ơn bạn!",
@@ -73,7 +72,7 @@ export default function Contact() {
 
     try {
       setSubmitState("loading");
-      trackEvent("contact_submit_attempt", {step});
+      trackEvent("contact_submit_attempt", {source: "contact_page"});
       const res = await fetch(CONTACT_FORM_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
@@ -97,7 +96,6 @@ export default function Contact() {
       setName("");
       setEmail("");
       setMessage("");
-      setStep(1);
     } catch {
       setSubmitState("error");
       trackEvent("contact_submit_error", {reason: "request_failed"});
@@ -152,17 +150,15 @@ export default function Contact() {
                     placeholder={t.yourEmail}
                   />
                 </div>
-                {step === 2 && (
-                  <div>
-                    <label className="mb-2 block text-sm text-foreground">{t.message}</label>
-                    <textarea
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      className="min-h-[120px] w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
-                      placeholder={t.yourMessage}
-                    />
-                  </div>
-                )}
+                <div>
+                  <label className="mb-2 block text-sm text-foreground">{t.message} ({t.optional})</label>
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="min-h-[120px] w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm outline-none"
+                    placeholder={t.yourMessage}
+                  />
+                </div>
 
                 <input
                   tabIndex={-1}
@@ -178,27 +174,13 @@ export default function Contact() {
                 {submitState === "success" && <p className="text-xs text-emerald-500">{t.success}</p>}
                 {submitState === "error" && <p className="text-xs text-red-500">{t.error}</p>}
 
-                {step === 1 ? (
-                  <button
-                    type="button"
-                    disabled={!name.trim() || !email.trim()}
-                    onClick={() => {
-                      setStep(2);
-                      trackEvent("contact_step_continue", {source: "contact_page"});
-                    }}
-                    className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    {t.continue} <Send size={14} />
-                  </button>
-                ) : (
-                  <button
-                    type="submit"
-                    disabled={submitState === "loading"}
-                    className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
-                  >
-                    {submitState === "loading" ? t.sending : t.send} <Send size={14} />
-                  </button>
-                )}
+                <button
+                  type="submit"
+                  disabled={submitState === "loading"}
+                  className="cta-btn inline-flex w-full items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-medium disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {submitState === "loading" ? t.sending : t.send} <Send size={14} />
+                </button>
               </div>
             </form>
           </div>

@@ -190,7 +190,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               onClick={() => trackEvent("mobile_sticky_cta_click", {location: location.pathname})}
               className="cta-btn flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold shadow-[0_10px_24px_rgba(0,0,0,0.22)]"
             >
-              Book a strategy call
+              Contact
             </Link>
           </div>
         )}

@@ -54,7 +54,7 @@ export default function SiteFooter() {
         <div>
           <p className="mb-4 text-xs font-bold uppercase tracking-[0.14em] text-foreground">{t.navigate}</p>
           <div className="space-y-3 text-sm">
-            <Link to="/" className="block text-muted-foreground hover:text-foreground">{t.home}</Link>
+            <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="block text-muted-foreground hover:text-foreground">{t.home}</Link>
             <Link to="/portfolio" className="block text-muted-foreground hover:text-foreground">{t.portfolio}</Link>
             <Link to="/blog" className="block text-muted-foreground hover:text-foreground">{t.blog}</Link>
             <Link to="/about" className="block text-muted-foreground hover:text-foreground">{t.about}</Link>

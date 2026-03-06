@@ -29,15 +29,7 @@
         var ogUrl = document.querySelector('meta[property="og:url"]');
         if (ogUrl) ogUrl.setAttribute("content", canonicalUrl);
 
-        if (path.indexOf("/blog/") === 0 && path.split("/").length > 2) {
-          var slug = path.split("/").pop() || "";
-          var niceTitle = slug
-            .replace(/-/g, " ")
-            .replace(/\b\w/g, function (m) {
-              return m.toUpperCase();
-            });
-          document.title = niceTitle + " | Tyler Ngo";
-        }
+        // Title is handled by route-level prerender metadata when available.
       })();
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

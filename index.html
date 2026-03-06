@@ -11,7 +11,35 @@
     <meta name="author" content="Tyler Ngo" />
     <meta name="robots" content="index,follow" />
     <meta name="theme-color" content="#0b1020" />
-    <link rel="canonical" href="https://www.tylerngo.co.uk/" />
+    <link rel="canonical" href="https://www.tylerngo.co.uk" />
+    <script>
+      (function () {
+        var origin = "https://www.tylerngo.co.uk";
+        var path = window.location.pathname || "/";
+        var canonicalUrl = origin + (path === "/" ? "" : path);
+
+        var canonical = document.querySelector('link[rel="canonical"]');
+        if (!canonical) {
+          canonical = document.createElement("link");
+          canonical.setAttribute("rel", "canonical");
+          document.head.appendChild(canonical);
+        }
+        canonical.setAttribute("href", canonicalUrl);
+
+        var ogUrl = document.querySelector('meta[property="og:url"]');
+        if (ogUrl) ogUrl.setAttribute("content", canonicalUrl);
+
+        if (path.indexOf("/blog/") === 0 && path.split("/").length > 2) {
+          var slug = path.split("/").pop() || "";
+          var niceTitle = slug
+            .replace(/-/g, " ")
+            .replace(/\b\w/g, function (m) {
+              return m.toUpperCase();
+            });
+          document.title = niceTitle + " | Tyler Ngo";
+        }
+      })();
+    </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/favicon.png" />

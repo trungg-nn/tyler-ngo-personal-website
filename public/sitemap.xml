@@ -2,151 +2,193 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.tylerngo.co.uk</loc>
-    <lastmod>2026-02-14T22:35:17.671Z</lastmod>
+    <lastmod>2026-03-06T21:00:17.556Z</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.00</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/portfolio</loc>
-    <lastmod>2026-02-14T22:35:17.671Z</lastmod>
+    <lastmod>2026-03-06T21:00:17.556Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.70</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog</loc>
-    <lastmod>2026-02-14T22:35:17.671Z</lastmod>
+    <lastmod>2026-03-06T21:00:17.556Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.70</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/about</loc>
-    <lastmod>2026-02-14T22:35:17.671Z</lastmod>
+    <lastmod>2026-03-06T21:00:17.556Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.70</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/contact</loc>
-    <lastmod>2026-02-14T22:35:17.671Z</lastmod>
+    <lastmod>2026-03-06T21:00:17.556Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.70</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/modern-marketing-2026-practical-framework</loc>
-    <lastmod>2026-02-14T04:15:47.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:40.000Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.tylerngo.co.uk/blog/ai-marketing-automation-for-smes-2026</loc>
+    <lastmod>2026-02-14T23:25:55.000Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.tylerngo.co.uk/blog/b2b-go-to-market-strategy-playbook-2026</loc>
+    <lastmod>2026-02-14T23:25:58.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/b2b-saas-seo-strategy-2026</loc>
-    <lastmod>2026-02-14T04:15:40.000Z</lastmod>
+    <lastmod>2026-02-14T23:27:24.000Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.tylerngo.co.uk/blog/brand-vs-performance-budget-split-2026</loc>
+    <lastmod>2026-02-14T23:26:01.000Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.tylerngo.co.uk/blog/business-model-validation-for-startups-2026</loc>
+    <lastmod>2026-02-14T23:26:04.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/google-ads-vs-seo-budget-split-2026</loc>
-    <lastmod>2026-02-14T04:15:44.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:06.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/how-to-budget-with-irregular-income-2026</loc>
-    <lastmod>2026-02-14T09:52:20.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:08.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/how-to-build-6-month-emergency-fund-uk-2026</loc>
-    <lastmod>2026-02-14T09:52:19.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:10.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/how-to-build-ugc-ads-funnel-tiktok-meta-2026</loc>
-    <lastmod>2026-02-14T10:37:06.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:12.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/how-to-improve-credit-score-uk-2026</loc>
-    <lastmod>2026-02-14T10:00:16.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:14.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/how-to-improve-cro-b2b-landing-pages-2026</loc>
-    <lastmod>2026-02-14T10:37:07.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:17.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/how-to-pay-off-debt-snowball-vs-avalanche-uk-2026</loc>
-    <lastmod>2026-02-14T10:00:12.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:19.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/how-to-rank-ai-overviews-2026</loc>
-    <lastmod>2026-02-14T10:37:08.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:22.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/how-to-start-investing-beginners-uk-2026</loc>
-    <lastmod>2026-02-14T10:08:09.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:24.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/how-to-start-pension-planning-uk-2026</loc>
-    <lastmod>2026-02-14T10:00:20.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:27.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/internal-linking-seo-architecture-2026</loc>
-    <lastmod>2026-02-14T10:37:09.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:29.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/linkedin-content-strategy-b2b-2026</loc>
-    <lastmod>2026-02-14T04:15:43.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:32.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/marketing-attribution-model-b2b-2026</loc>
-    <lastmod>2026-02-14T04:15:45.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:34.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/marketing-dashboard-kpis-2026</loc>
-    <lastmod>2026-02-14T10:37:10.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:37.000Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.tylerngo.co.uk/blog/omnichannel-strategy-for-retail-ecommerce-2026</loc>
+    <lastmod>2026-02-14T23:26:42.000Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.tylerngo.co.uk/blog/pricing-strategy-for-growth-companies-2026</loc>
+    <lastmod>2026-02-14T23:26:44.000Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.tylerngo.co.uk/blog/retention-marketing-framework-2026</loc>
+    <lastmod>2026-02-14T23:27:26.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/search-intent-content-calendar-2026</loc>
-    <lastmod>2026-02-14T10:37:11.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:47.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/seo-audit-checklist-2026</loc>
-    <lastmod>2026-02-14T04:15:42.000Z</lastmod>
+    <lastmod>2026-02-14T23:27:29.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/seo-content-funnel-2026</loc>
-    <lastmod>2026-02-14T10:37:12.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:50.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
     <loc>https://www.tylerngo.co.uk/blog/topical-authority-blueprint-2026</loc>
-    <lastmod>2026-02-14T10:37:13.000Z</lastmod>
+    <lastmod>2026-02-14T23:26:52.000Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
   </url>

@@ -34,6 +34,7 @@ export default function Contact() {
       success: "Thanks — your message has been sent.",
       error: "Could not send right now. Please email me directly.",
       missingEndpoint: "Form endpoint not configured yet. Please use direct email for now.",
+      emailFallback: "Send via email instead",
     },
     vi: {
       label: "Liên hệ",
@@ -54,8 +55,15 @@ export default function Contact() {
       success: "Đã gửi thành công. Cảm ơn bạn!",
       error: "Gửi thất bại. Vui lòng email trực tiếp giúp mình.",
       missingEndpoint: "Form chưa cấu hình nơi nhận. Tạm thời vui lòng email trực tiếp.",
+      emailFallback: "Gửi qua email thay thế",
     },
   }[lang];
+
+  const mailtoHref = `mailto:hello@tylerngo.co.uk?subject=${encodeURIComponent(
+    `Website Contact: ${name || "New message"}`
+  )}&body=${encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+  )}`;
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -172,7 +180,17 @@ export default function Contact() {
 
                 {!hasContactEndpoint && <p className="text-xs text-amber-500">{t.missingEndpoint}</p>}
                 {submitState === "success" && <p className="text-xs text-emerald-500">{t.success}</p>}
-                {submitState === "error" && <p className="text-xs text-red-500">{t.error}</p>}
+                {submitState === "error" && (
+                  <div className="space-y-2">
+                    <p className="text-xs text-red-500">{t.error}</p>
+                    <a
+                      href={mailtoHref}
+                      className="inline-flex items-center gap-2 text-xs font-medium text-primary underline underline-offset-2"
+                    >
+                      {t.emailFallback}
+                    </a>
+                  </div>
+                )}
 
                 <button
                   type="submit"

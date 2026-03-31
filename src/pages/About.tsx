@@ -83,12 +83,12 @@ export default function About() {
             <h2 className="text-3xl font-semibold md:text-[38px]">{t.edu}</h2>
             <div className="mt-5 space-y-4">
               <article className="interactive-card rounded-2xl border border-border bg-card/55 px-5 py-4">
-                <h3 className="text-2xl font-semibold">MSc Digital Marketing</h3>
-                <p className="mt-1 text-sm text-muted-foreground">University of London</p>
+                <h3 className="text-2xl font-semibold">MSc Digital Marketing (Distinction)</h3>
+                <p className="mt-1 text-sm text-muted-foreground">University of Exeter | Exeter, UK</p>
               </article>
               <article className="interactive-card rounded-2xl border border-border bg-card/55 px-5 py-4">
-                <h3 className="text-2xl font-semibold">BSc Business Administration</h3>
-                <p className="mt-1 text-sm text-muted-foreground">University of Economics, Vietnam</p>
+                <h3 className="text-2xl font-semibold">BA (Hons) International Communication (2:1)</h3>
+                <p className="mt-1 text-sm text-muted-foreground">Diplomatic Academy of Vietnam | Hanoi, Vietnam</p>
               </article>
             </div>
           </div>

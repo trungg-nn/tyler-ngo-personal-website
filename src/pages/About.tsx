@@ -60,10 +60,21 @@ export default function About() {
           <p className="mb-2 text-[11px] uppercase tracking-[0.18em] text-primary">{t.label}</p>
           <h1 className="text-5xl font-semibold md:text-[52px]">Tyler Ngo</h1>
 
-          <div className="mt-7 space-y-5 text-base leading-[1.7] text-muted-foreground">
-            <p>{t.p1}</p>
-            <p>{t.p2}</p>
-            <p>{t.p3}</p>
+          <div className="mt-7 grid items-start gap-8 lg:grid-cols-[1.35fr_0.9fr] lg:gap-10">
+            <div className="space-y-5 text-base leading-[1.7] text-muted-foreground">
+              <p>{t.p1}</p>
+              <p>{t.p2}</p>
+              <p>{t.p3}</p>
+            </div>
+
+            <aside className="overflow-hidden rounded-2xl border border-border/80 bg-card/45 p-2 shadow-sm">
+              <img
+                src="/images/Headshot_Profile_Tyler_web.png"
+                alt="Tyler Ngo profile headshot"
+                className="h-full w-full rounded-xl object-cover"
+                loading="lazy"
+              />
+            </aside>
           </div>
 
           <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">

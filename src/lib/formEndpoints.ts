@@ -1,6 +1,7 @@
 const DEFAULT_INBOX = "hello@tylerngo.co.uk";
+const FORMSPREE_CONTACT_ENDPOINT = "https://formspree.io/f/meepkbkq";
 
-const defaultContactEndpoint = `https://formsubmit.co/ajax/${DEFAULT_INBOX}`;
+const defaultContactEndpoint = FORMSPREE_CONTACT_ENDPOINT;
 const defaultNewsletterEndpoint = `https://formsubmit.co/ajax/${DEFAULT_INBOX}`;
 
 export const CONTACT_FORM_ENDPOINT =

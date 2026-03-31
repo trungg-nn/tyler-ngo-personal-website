@@ -61,10 +61,16 @@ export default function About() {
           <h1 className="text-5xl font-semibold md:text-[52px]">Tyler Ngo</h1>
 
           <div className="mt-7 grid items-start gap-8 lg:grid-cols-[1.35fr_0.9fr] lg:gap-10">
-            <div className="space-y-5 text-base leading-[1.7] text-muted-foreground">
-              <p>{t.p1}</p>
-              <p>{t.p2}</p>
-              <p>{t.p3}</p>
+            <div>
+              <div className="space-y-5 text-base leading-[1.7] text-muted-foreground">
+                <p>{t.p1}</p>
+                <p>{t.p2}</p>
+                <p>{t.p3}</p>
+              </div>
+
+              <div className="mt-8 grid grid-cols-2 gap-4">
+                {metrics[lang].map((m) => <MetricCard key={m.label} {...m} />)}
+              </div>
             </div>
 
             <aside className="overflow-hidden rounded-2xl border border-border/80 bg-card/45 p-2 shadow-sm">
@@ -75,10 +81,6 @@ export default function About() {
                 loading="lazy"
               />
             </aside>
-          </div>
-
-          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
-            {metrics[lang].map((m) => <MetricCard key={m.label} {...m} />)}
           </div>
 
           <div className="mt-14">

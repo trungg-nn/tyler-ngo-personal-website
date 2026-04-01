@@ -76,6 +76,15 @@ const ensureGtag = () => {
 
 const loadGaScript = () => {
   if (window.__gaLoaded) return;
+
+  const existing = document.querySelector<HTMLScriptElement>(
+    `script[src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"]`
+  );
+  if (existing) {
+    window.__gaLoaded = true;
+    return;
+  }
+
   const script = document.createElement("script");
   script.async = true;
   script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;

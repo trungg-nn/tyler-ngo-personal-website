@@ -2,7 +2,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Moon, Sun, Menu, X, Monitor } from "lucide-react";
 import SiteFooter from "@/components/SiteFooter";
-import CookieBanner from "@/components/CookieBanner";
 import { trackEvent } from "@/lib/analytics";
 
 export type Lang = "en" | "vi";
@@ -198,7 +197,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         )}
 
         <SiteFooter />
-        <CookieBanner />
       </div>
     </LanguageContext.Provider>
   );
